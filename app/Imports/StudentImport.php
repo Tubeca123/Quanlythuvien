@@ -16,6 +16,7 @@ class StudentImport implements ToCollection
         // dd($collection[0][0]);
         $data= [];
         foreach ($collection as $key => $row) {
+            
             $data[] = [
                 'Ma_sv' => $row[0],
                 'Name' => $row[1],
@@ -29,7 +30,6 @@ class StudentImport implements ToCollection
         //     'Gmail' => $collection[0][2],
         // ];
         
-        // Tạo một Student mới
         return  Student::insert($data);
     }
 }

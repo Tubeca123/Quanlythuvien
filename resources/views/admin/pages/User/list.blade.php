@@ -1,20 +1,19 @@
+
+@extends('admin.master_layout')
 <style>
     #success-message, #error-message {
-        position: fixed; /* Giữ thông báo ở vị trí cố định */
-        right: 20px; /* Căn trái */
-        top: 20px; /* Căn từ trên xuống */
-        z-index: 9999; /* Đảm bảo thông báo nằm trên cùng */
-        display: none; /* Ẩn thông báo ban đầu */
+        position: fixed;
+        right: 20px; 
+        top: 20px; 
+        z-index: 9999;
+        display: none; 
     }
 
     .alert {
-        margin: 0; /* Bỏ khoảng cách mặc định */
-        padding: 10px; /* Thêm khoảng cách bên trong */
-        border-radius: 5px; /* Bo góc thông báo */
+        margin: 0;
+        padding: 10px;
+        border-radius: 5px; 
     }
-</style>
-@extends('admin.master_layout')
-<style>
     div.dataTables_filter {
         float: right;
     }

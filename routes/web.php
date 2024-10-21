@@ -25,6 +25,8 @@ Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
     Route::get('/logout', [UserController::class, 'handleLogout'])->name('handleLogout');//vd đây là link logout
     Route::get('/user', [UserController::class, 'show'])->name('show_list_users');
     Route::get('/profile/{Id}', [UserController::class, 'profile'])->name('profile');
+    Route::put('/profile/{Id}', [UserController::class, 'update_profile'])->name('update_profile');
+    Route::put('/password/{Id}', [UserController::class, 'update_password'])->name('update_pw');
 
     Route::post('/user_lock/{Id}', [UserController::class, 'lockuser'])->name('lock_user');
     Route::post('/user_role/{Id}', [UserController::class, 'roleuser'])->name('role_user');

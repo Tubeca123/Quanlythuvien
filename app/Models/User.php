@@ -21,12 +21,11 @@ class User extends Authenticatable
         'Create_by',
         'Update_date',
         'Update_by',
-        'IsActive'
+        'IsActive',
+        'Pw'
     ];
     protected $primaryKey = 'Id';
     // protected $table = 'users';
     public $timestamps = false;
-    protected $hidden = [
-        'Pw'
-    ];
+    
 }

@@ -52,6 +52,7 @@ class UserController extends Controller
         'password.required' => 'Mật khẩu là bắt buộc.',
         'password.min' => 'Mật khẩu phải có ít nhất 3 ký tự.',
         'password.max' => 'Mật khẩu không được dài quá 20 ký tự.',
+
         'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
         'password_confirmation.required' => 'Vui lòng nhập lại mật khẩu xác nhận.',
         'password_confirmation.min' => 'Mật khẩu xác nhận phải có ít nhất 3 ký tự.',
@@ -103,10 +104,12 @@ class UserController extends Controller
             // dd($user);
             if (Hash::check($rqt->password, $user->Pw)) {
 
+
+
                 Auth::login($user);
                 return redirect()->route("quanlytv");
             }else{
-                dd("mk không đúng");
+                return back()->with('error', 'Mã sinh viên hoặc mật khẩu không đúng');
             }
         }
         dd($rqt);
@@ -136,9 +139,72 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $rqt, string $id)
     {
-        //
+        
+    }
+    public function update_profile(Request $rqt, string $id)
+    {
+        
+        $user = User::findorFail($id);
+        
+        $inputData=[
+            'Address'=>$rqt->address ?? $user->Address,
+            'Email'=>$rqt->email ?? $user->Email,
+            'Phone'=>$rqt->phone ?? $user->Phone,
+            
+        ];
+        
+        
+        $user->update($inputData);
+        return redirect()->route("profile", ['Id' => $id])->with('success', 'Sửa thông tin thành công');
+        
+    }
+
+    public function update_password(Request $rqt, string $id)
+    {
+        // dd($rqt);
+        $user = User::findorFail($id);
+    
+            if (Hash::check($rqt->pw, $user->Pw)) {
+    
+                
+                $validator = Validator::make($rqt->all(), [
+                    'pw' => 'required|string',
+                    'password_confirmation' => 'required|string|min:3|max:20',
+                    'password' => 'required|string|min:3|max:20|confirmed',
+                    
+                ], [
+                    'pw.required' => 'Mật khẩu cũ là bắt buộc.',
+
+                    'password.required' => 'Mật khẩu mới là bắt buộc.',
+                    'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
+
+                    'password.min' => 'Mật khẩu xác nhận phải có ít nhất 3 ký tự.',
+                    'password.max' => 'Mật khẩu xác nhận không được vượt quá 20 ký tự.',
+                    'password_confirmation.required' => 'Vui lòng nhập lại mật khẩu xác nhận.',
+                    'password_confirmation.min' => 'Mật khẩu xác nhận phải có ít nhất 3 ký tự.',
+                    'password_confirmation.max' => 'Mật khẩu xác nhận không được vượt quá 20 ký tự.'
+                ]);
+    
+                
+                if ($validator->fails()) {
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+                $inputData=[
+                    'Pw'=>Hash::make($rqt->password),
+                    
+                ];
+                $user->update($inputData);
+                
+                return redirect()->route("profile", ['Id' => $id])->with('success', 'Cập nhật mật khẩu thành công');
+            } else {
+                 
+                return back()->with('error', 'Mật khẩu hiện tại không đúng');
+            }
+        
     }
 
     /**
