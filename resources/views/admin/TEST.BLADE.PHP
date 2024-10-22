@@ -1,350 +1,156 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.master_layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Admincast bootstrap 4 &amp; angular 5 admin template, Шаблон админки | Dashboard</title>
-    <!-- GLOBAL MAINLY STYLES-->
-    <link href="{{asset("assets/vendors/bootstrap/dist/css/bootstrap.min.css")}}"rel="stylesheet" />
-    <link href="{{asset("assets/vendors/font-awesome/css/font-awesome.min.css")}}" rel="stylesheet" />
-    <link href="{{asset("assets/vendors/themify-icons/css/themify-icons.css")}}" rel="stylesheet" />
-    <!-- PLUGINS STYLES-->
-    <link href="{{asset("assets/vendors/jvectormap/jquery-jvectormap-2.0.3.css")}}" rel="stylesheet" />
-    <!-- THEME STYLES-->
-    <link href="assets/css/main.min.css" rel="stylesheet" />
-    <!-- PAGE LEVEL STYLES-->
-</head>
-
-<body class="fixed-navbar">
-    <div class="page-wrapper">
-        <!-- START HEADER-->
-        <header class="header">
-            <div class="page-brand">
-                <a class="link" href="index.html">
-                    <span class="brand">Admin
-                        <span class="brand-tip">CAST</span>
-                    </span>
-                    <span class="brand-mini">AC</span>
-                </a>
-            </div>
-            <div class="flexbox flex-1">
-                <!-- START TOP-LEFT TOOLBAR-->
-                <ul class="nav navbar-toolbar">
-                    <li>
-                        <a class="nav-link sidebar-toggler js-sidebar-toggler"><i class="ti-menu"></i></a>
-                    </li>
-                    <li>
-                        <form class="navbar-search" action="javascript:;">
-                            <div class="rel">
-                                <span class="search-icon"><i class="ti-search"></i></span>
-                                <input class="form-control" placeholder="Search here...">
-                            </div>
-                        </form>
-                    </li>
-                </ul>
-                <!-- END TOP-LEFT TOOLBAR-->
-                <!-- START TOP-RIGHT TOOLBAR-->
-                <ul class="nav navbar-toolbar">
-                    <li class="dropdown dropdown-inbox">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i>
-                            <span class="badge badge-primary envelope-badge">9</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-right dropdown-menu-media">
-                            <li class="dropdown-menu-header">
-                                <div>
-                                    <span><strong>9 New</strong> Messages</span>
-                                    <a class="pull-right" href="mailbox.html">view all</a>
-                                </div>
-                            </li>
-                            <li class="list-group list-group-divider scroller" data-height="240px" data-color="#71808f">
-                                <div>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <img src="{{asset("assets/img/users/u1.jpg")}}" />
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-strong"> </div>Jeanne Gonzalez<small class="text-muted float-right">Just now</small>
-                                                <div class="font-13">Your proposal interested me.</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <img src="{{asset("assets/img/users/u2.jpg")}}" />
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-strong"></div>Becky Brooks<small class="text-muted float-right">18 mins</small>
-                                                <div class="font-13">Lorem Ipsum is simply.</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <img src="{{asset("assets/img/users/u3.jpg")}}" />
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-strong"></div>Frank Cruz<small class="text-muted float-right">18 mins</small>
-                                                <div class="font-13">Lorem Ipsum is simply.</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <img src="{{asset("assets/img/users/u4.jpg")}}" />
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-strong"></div>Rose Pearson<small class="text-muted float-right">3 hrs</small>
-                                                <div class="font-13">Lorem Ipsum is simply.</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown dropdown-notification">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o rel"><span class="notify-signal"></span></i></a>
-                        <ul class="dropdown-menu dropdown-menu-right dropdown-menu-media">
-                            <li class="dropdown-menu-header">
-                                <div>
-                                    <span><strong>5 New</strong> Notifications</span>
-                                    <a class="pull-right" href="javascript:;">view all</a>
-                                </div>
-                            </li>
-                            <li class="list-group list-group-divider scroller" data-height="240px" data-color="#71808f">
-                                <div>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <span class="badge badge-success badge-big"><i class="fa fa-check"></i></span>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-13">4 task compiled</div><small class="text-muted">22 mins</small></div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <span class="badge badge-default badge-big"><i class="fa fa-shopping-basket"></i></span>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-13">You have 12 new orders</div><small class="text-muted">40 mins</small></div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <span class="badge badge-danger badge-big"><i class="fa fa-bolt"></i></span>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-13">Server #7 rebooted</div><small class="text-muted">2 hrs</small></div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item">
-                                        <div class="media">
-                                            <div class="media-img">
-                                                <span class="badge badge-success badge-big"><i class="fa fa-user"></i></span>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="font-13">New user registered</div><small class="text-muted">2 hrs</small></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown dropdown-user">
-                        <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
-                            <img src="{{asset("assets/img/admin-avatar.png")}}" />
-                            <span></span>Admin<i class="fa fa-angle-down m-l-5"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="profile.html"><i class="fa fa-user"></i>Profile</a>
-                            <a class="dropdown-item" href="profile.html"><i class="fa fa-cog"></i>Settings</a>
-                            <a class="dropdown-item" href="javascript:;"><i class="fa fa-support"></i>Support</a>
-                            <li class="dropdown-divider"></li>
-                            <a class="dropdown-item" href="login.html"><i class="fa fa-power-off"></i>Logout</a>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- END TOP-RIGHT TOOLBAR-->
-            </div>
-        </header>
-        <!-- END HEADER-->
-        <!-- START SIDEBAR-->
-        <nav class="page-sidebar" id="sidebar">
-            <div id="sidebar-collapse">
-                <div class="admin-block d-flex">
-                    <div>
-                        <img src="{{asset("assets/img/admin-avatar.png")}}" width="45px" />
-                    </div>
-                    <div class="admin-info">
-                        <div class="font-strong">James Brown</div><small>Administrator</small></div>
-                </div>
-                <x-admin-menu-component>
-            </div>
-        </nav>
-        <!-- END SIDEBAR-->
-        <div class="content-wrapper">
-           @yield('page_content')
+@section('page_content')
+<main id="main" class="main">
+    <div class="container shadow p-5">
+        <div class="row pb-2">
+            <h2>Sửa thông tin sách</h2>
         </div>
-    </div>
-    <!-- BEGIN THEME CONFIG PANEL-->
-    <div class="theme-config">
-        <div class="theme-config-toggle"><i class="fa fa-cog theme-config-show"></i><i class="ti-close theme-config-close"></i></div>
-        <div class="theme-config-box">
-            <div class="text-center font-18 m-b-20">SETTINGS</div>
-            <div class="font-strong">LAYOUT OPTIONS</div>
-            <div class="check-list m-b-20 m-t-10">
-                <label class="ui-checkbox ui-checkbox-gray">
-                    <input id="_fixedNavbar" type="checkbox" checked>
-                    <span class="input-span"></span>Fixed navbar</label>
-                <label class="ui-checkbox ui-checkbox-gray">
-                    <input id="_fixedlayout" type="checkbox">
-                    <span class="input-span"></span>Fixed layout</label>
-                <label class="ui-checkbox ui-checkbox-gray">
-                    <input class="js-sidebar-toggler" type="checkbox">
-                    <span class="input-span"></span>Collapse sidebar</label>
-            </div>
-            <div class="font-strong">LAYOUT STYLE</div>
-            <div class="m-t-10">
-                <label class="ui-radio ui-radio-gray m-r-10">
-                    <input type="radio" name="layout-style" value="" checked="">
-                    <span class="input-span"></span>Fluid</label>
-                <label class="ui-radio ui-radio-gray">
-                    <input type="radio" name="layout-style" value="1">
-                    <span class="input-span"></span>Boxed</label>
-            </div>
-            <div class="m-t-10 m-b-10 font-strong">Màu nền</div>
-            <div class="d-flex m-b-20">
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Default">
-                    <label>
-                        <input type="radio" name="setting-theme" value="default" checked="">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-white"></div>
-                        <div class="color-small bg-ebony"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Blue">
-                    <label>
-                        <input type="radio" name="setting-theme" value="blue">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-blue"></div>
-                        <div class="color-small bg-ebony"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Green">
-                    <label>
-                        <input type="radio" name="setting-theme" value="green">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-green"></div>
-                        <div class="color-small bg-ebony"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Purple">
-                    <label>
-                        <input type="radio" name="setting-theme" value="purple">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-purple"></div>
-                        <div class="color-small bg-ebony"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Orange">
-                    <label>
-                        <input type="radio" name="setting-theme" value="orange">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-orange"></div>
-                        <div class="color-small bg-ebony"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Pink">
-                    <label>
-                        <input type="radio" name="setting-theme" value="pink">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-pink"></div>
-                        <div class="color-small bg-ebony"></div>
-                    </label>
-                </div>
-            </div>
-            <div class="d-flex">
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="White">
-                    <label>
-                        <input type="radio" name="setting-theme" value="white">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color"></div>
-                        <div class="color-small bg-silver-100"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Blue light">
-                    <label>
-                        <input type="radio" name="setting-theme" value="blue-light">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-blue"></div>
-                        <div class="color-small bg-silver-100"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Green light">
-                    <label>
-                        <input type="radio" name="setting-theme" value="green-light">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-green"></div>
-                        <div class="color-small bg-silver-100"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Purple light">
-                    <label>
-                        <input type="radio" name="setting-theme" value="purple-light">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-purple"></div>
-                        <div class="color-small bg-silver-100"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Orange light">
-                    <label>
-                        <input type="radio" name="setting-theme" value="orange-light">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-orange"></div>
-                        <div class="color-small bg-silver-100"></div>
-                    </label>
-                </div>
-                <div class="color-skin-box" data-toggle="tooltip" data-original-title="Pink light">
-                    <label>
-                        <input type="radio" name="setting-theme" value="pink-light">
-                        <span class="color-check-icon"><i class="fa fa-check"></i></span>
-                        <div class="color bg-pink"></div>
-                        <div class="color-small bg-silver-100"></div>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END THEME CONFIG PANEL-->
-    <!-- BEGIN PAGA BACKDROPS-->
-    <div class="sidenav-backdrop backdrop"></div>
-    <!-- <div class="preloader-backdrop">
-        <div class="page-preloader">Loading</div>
-    </div> -->
-    <!-- END PAGA BACKDROPS-->
-    <!-- CORE PLUGINS-->
-    <script src="{{asset("assets/vendors/jquery/dist/jquery.min.js")}}" type="text/javascript"></script>
-    <script src="{{asset("assets/vendors/popper.js/dist/umd/popper.min.js")}}" type="text/javascript"></script>
-    <script src="{{asset("assets/vendors/bootstrap/dist/js/bootstrap.min.js")}}" type="text/javascript"></script>
-    <script src="{{asset("assets/vendors/metisMenu/dist/metisMenu.min.js")}}" type="text/javascript"></script>
-    <script src="{{asset("assets/vendors/jquery-slimscroll/jquery.slimscroll.min.js")}}" type="text/javascript"></script>
-    <!-- PAGE LEVEL PLUGINS-->
-    <script src="{{asset("assets/vendors/chart.js/dist/Chart.min.js")}}" type="text/javascript"></script>
-    <script src="{{asset("assets/vendors/jvectormap/jquery-jvectormap-2.0.3.min.js")}}" type="text/javascript"></script>
-    <script src="{{asset("assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js")}}" type="text/javascript"></script>
-    <script src="{{asset("assets/vendors/jvectormap/jquery-jvectormap-us-aea-en.js")}}" type="text/javascript"></script>
-    <!-- CORE SCRIPTS-->
-    <script src={{asset("assets/js/app.min.js" type="text/javascript")}}"></script>
-    <!-- PAGE LEVEL SCRIPTS-->
-    <script src="{{asset("assets/js/scripts/dashboard_1_demo.js")}}" type="text/javascript"></script>
-</body>
 
-</html>
+        <!-- Laravel form -->
+        <form method="POST" action="{{ route('update_book', ['Id' => $books->Id]) }}"  >
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="Id" value="{{$books->Id }}">
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Tên </label>
+                <div class="col-sm-10">
+                    <input name="Name" type="text" class="form-control" value="{{ old('Name', $books->Name) }}" placeholder="Mời nhập">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Thông tin </label>
+                <div class="col-sm-10">
+                    <input name="Name" type="text" class="form-control" value="{{ old('About', $books->About) }}" placeholder="Mời nhập">
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Thể loại</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="Categories_id" required>
+                        <option value="">Chọn thể loại</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->Id }}" {{ old('Categories_id', $books->Categories_id) == $category->Id ? 'selected' : '' }}>
+                                {{ $category->Name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Nhà xuất bản</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="Publisher_id" required>
+                        <option value="">Chọn nhà xuất bản</option>
+                        @foreach($publis as $publis)
+                            <option value="{{ $publis->Id }}" {{ old('Publisher_id', $books->Publisher_id) == $publis->Id ? 'selected' : '' }}>
+                                {{ $publis->Name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Số lượng</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" name="Quantity" value="{{ old('Quantity', $books->Quantity) }}">
+                </div>
+            </div>
+            
+
+            
+            <!-- Ngày thêm -->
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Ngày thêm</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Created_date" value="{{ $books->Create_date }}" readonly>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Tác giả</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="author" value="{{ old('author', $books->author) }}">
+                </div>
+            </div>
+
+            <!-- Người thêm -->
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Người thêm</label>
+                <div class="col-sm-10">
+                    <input name="Create_by" type="text" class="form-control" value="{{ old('Create_by', $books->Create_by) }}" readonly>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Nhà xuất bản</label>
+                <div class="col-sm-10">
+                    <input name="Create_by" type="text" class="form-control" value="{{ old('Publised_name', $books->Publised_name) }}" readonly>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Năm sản xuất</label>
+                <div class="col-sm-10">
+                    <input name="Create_by" type="text" class="form-control" value="{{ old('Publised_year', $books->Publised_year) }}" readonly>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Người thêm</label>
+                <div class="col-sm-10">
+                    <input name="Create_by" type="text" class="form-control" value="{{ old('Create_by', $books->Create_by) }}" readonly>
+                </div>
+            </div>
+
+            
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Ngày thêm</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Update_date" value="{{ old('Create_date', $books->Create_date) }}" readonly>
+                </div>
+            </div>
+            <!-- Ngày sửa -->
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Ngày sửa</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Update_date" value="{{ \Carbon\Carbon::now() }}" readonly>
+                </div>
+            </div>
+
+            <!-- Người sửa -->
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Người sửa</label>
+                <div class="col-sm-10">
+                    <input name="Update_by" type="text" class="form-control" value="{{ old('Update_by') }}" placeholder="Nhập người sửa">
+                </div>
+            </div>
+
+            <!-- Hiển thị -->
+            <div class="form-group at-3 mb-5">
+                <label>
+                    <input type="checkbox" name="IsActive" {{ old('IsActive', $books->IsActive) ? 'checked' : '' }}>
+                    Hiển thị
+                </label>
+            </div>
+
+            <!-- Nút lưu -->
+            <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i> Lưu</button> 
+            <a href="{{route('show_list_book') }}" class="btn btn-lg btn-warning p-2">Quay lại</a>
+        </form>
+    </div>
+</main>
+
+
+
+            
+@endsection

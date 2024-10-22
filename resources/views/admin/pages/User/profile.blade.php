@@ -265,7 +265,7 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <button class="btn btn-default" type="submit">Lưu</button>
+                                                <button class="btn btn-info btn-fix" type="submit">Lưu</button>
                                             </div>
                                         </form>
                                     </div>
@@ -343,7 +343,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <button class="btn btn-default" type="submit">Lưu</button>
+                                                <button class="btn btn-info btn-fix" type="submit">Lưu</button>
                                             </div>
                                         </form>
 

@@ -7,7 +7,9 @@ use App\Models\User;
 use App\Models\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Book;
+use App\Models\Category;
+use App\Models\Publisher;
 class UserController extends Controller
 {
     /**
@@ -103,16 +105,14 @@ class UserController extends Controller
         if ($user = User::where("SV_id", $rqt->SV_id)->first()) {
             // dd($user);
             if (Hash::check($rqt->password, $user->Pw)) {
-
-
-
                 Auth::login($user);
                 return redirect()->route("quanlytv");
             }else{
-                return back()->with('error', 'Mã sinh viên hoặc mật khẩu không đúng');
+                return redirect()->route("login")->with('error', 'Mật khẩu không đúng');
+                // return back()->with('error', 'Mã sinh viên hoặc mật khẩu không đúng');
             }
-        }
-        dd($rqt);
+        }return redirect()->route("login")->with('error', 'Mã sinh viên không đúng');
+        
     }
 
     /**
@@ -123,6 +123,13 @@ class UserController extends Controller
         $user = User::all();
         // $user = User::where('Role_id',2)->get();
         return view('admin.pages.User.list',['user'=>$user]);
+    }
+
+    public function Trangchu()
+    { 
+        $books=Book::with(['Category','Publisher'])->get();
+        return view('clinet.index',['books'=>$books]);
+       
     }
 
     /**
@@ -243,7 +250,7 @@ class UserController extends Controller
     public function  handleLogout()
     {
         Auth::logout(); // Đăng xuất người dùng
-        return redirect()->route('welcome'); // Chuyển hướng về trang đăng nhập hoặc trang khác
+        return redirect()->route('login'); // Chuyển hướng về trang đăng nhập hoặc trang khác
     }
     
 }

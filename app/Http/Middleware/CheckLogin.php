@@ -16,9 +16,14 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check() && Auth::user()->Role_id == 1){
-            return $next($request);
-        }
+        if(Auth::check() ){
+            if( Auth::user()->Role_id == 1){
+                return $next($request);
+            }
+                return redirect()->route("trang_chu");
+                
+        } 
+
         return redirect()->route("login");
     }
 

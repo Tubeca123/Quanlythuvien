@@ -48,11 +48,11 @@
         <div class="ibox">
         <form action="{{route("import")}}" method="POST" enctype="multipart/form-data">
             @csrf
-            
             <input type="file" name="file" required>
             <button type="submit" class="btn btn-success">Thêm mới</button>
         </form>
-                
+        
+        
             <div class="ibox-body">
                 <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
                     <thead>

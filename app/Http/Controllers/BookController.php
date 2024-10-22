@@ -80,7 +80,7 @@ class BookController extends Controller
              'Publisher_id'  => $request->Publisher_id   ,
               'Quantity'=>$request->Quantity,  
               'Price'=>$request->Price,  
-             'Image'  => $request->Image  ?? 'tulon.img',
+             'Image'  => $request->avatar ,
              'author'=>$request->author,  
              'Publised_year'=>$request->Publised_year,  
              'Create_date'  => Now(),
@@ -125,8 +125,10 @@ class BookController extends Controller
         $inputData=[
             'Name'=>$rqt->Name ?? $books->Name,
             'About'=>$rqt->About ?? $books->About,
+            'Image'=>$rqt->img ?? $books->Image,
             'Categories_id'=>$rqt->Categories_id ?? $books->Categories_id,
             'Publisher_id'=>$rqt->Publisher_id  ?? $books->Publisher_id,
+
             'Quantity'=>$rqt->Quantity ?? $books->Quantity,
             'author'=>$rqt->author ?? $books->author,
 

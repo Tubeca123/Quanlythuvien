@@ -7,22 +7,38 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ExcelImportController;
+use App\Http\Controllers\UserforController;
 use App\Http\Middleware\CheckLogin;
 
-Route::get('/', function () {
+    // Route::get('/', function () {
+    //     return view('welcome');
+    // })->name("welcome");
     
-    return view('welcome');
-})->name("welcome");
+
+
+    Route::group(['prefix' => 'file-manager', 'middleware' => ['web']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 
     Route::get('/register', [UserController::class, 'index'])->name('register');
     Route::post('/register', [UserController::class, 'store'])->name('handregister');
     Route::get('/login', [UserController::class, 'login'])->name('login');
     Route::post('/login', [UserController::class, 'handlogin'])->name('handlogin');
+    Route::get('/logout', [UserController::class, 'handleLogout'])->name('handleLogout');//vd đây là link logout
 
-Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
+    Route::get('/', [UserController::class, 'Trangchu'])->name('trang_chu');
+    Route::post('/add-to-borrow/{id}', [UserforController::class, 'addtoborrow']);
+    Route::get('/borrow_detail', [UserforController::class, 'detail'])->name('br_detail');
+    Route::post('/remove_book/{id}', [UserforController::class, 'removeBook']);
+    Route::post('/create_borrow', [UserforController::class, 'createBorrow']);
+
+    Route::prefix('trangchu')->middleware(CheckLogin::class)->group(function () {
+    
+    });
+
+    Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
     
     Route::post('/import', [ExcelImportController::class, 'import'])->name("import");
-    Route::get('/logout', [UserController::class, 'handleLogout'])->name('handleLogout');//vd đây là link logout
     Route::get('/user', [UserController::class, 'show'])->name('show_list_users');
     Route::get('/profile/{Id}', [UserController::class, 'profile'])->name('profile');
     Route::put('/profile/{Id}', [UserController::class, 'update_profile'])->name('update_profile');
@@ -30,7 +46,7 @@ Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
 
     Route::post('/user_lock/{Id}', [UserController::class, 'lockuser'])->name('lock_user');
     Route::post('/user_role/{Id}', [UserController::class, 'roleuser'])->name('role_user');
-    Route::get('/', [DashboardController::class, 'index'])->name('quanlytv');
+    
 
 
     
@@ -54,6 +70,18 @@ Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
     Route::get('/edit_publisher/{Id}', [PublisherController::class, 'edit'])->name('edit_publis');
     Route::put('/edit_publisher/{Id}', [PublisherController::class, 'update'])->name('update_publis');
     Route::delete('/destroy_publisher/{Id}', [PublisherController::class, 'destroy'])->name('destroy_publis') ;
+
+    Route::get('/', [DashboardController::class, 'index'])->name('quanlytv');
+    Route::get('/home', [DashboardController::class, 'show'])->name('home_brow');    
+
+
+
+
+
+
+
+
+
 });
 
 

@@ -18,7 +18,10 @@
 
     <!-- ajax -->
     
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body class="fixed-navbar">
@@ -338,6 +341,8 @@
     <script src="{{asset("assets/vendors/bootstrap/dist/js/bootstrap.min.js")}}" type="text/javascript"></script>
     <script src="{{asset("assets/vendors/metisMenu/dist/metisMenu.min.js")}}" type="text/javascript"></script>
     <script src="{{asset("assets/vendors/jquery-slimscroll/jquery.slimscroll.min.js")}}" type="text/javascript"></script>
+
+    
     <!-- PAGE LEVEL PLUGINS-->
     <script src="{{asset("assets/vendors/chart.js/dist/Chart.min.js")}}" type="text/javascript"></script>
     <script src="{{asset("assets/vendors/jvectormap/jquery-jvectormap-2.0.3.min.js")}}" type="text/javascript"></script>
@@ -350,6 +355,8 @@
 
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+
+    
 </body>
 
 </html>

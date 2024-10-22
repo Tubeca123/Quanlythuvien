@@ -21,4 +21,5 @@ class AdminMenuComponent extends Component
     {
         return view('components.admin-menu-component');
     }
+    
 }
