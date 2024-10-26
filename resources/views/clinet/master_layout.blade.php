@@ -199,22 +199,7 @@
                 </div>
                 
 
-                <ul class="side-menu metismenu">
-                    <li>
-                        <a class="active" href="{{route('trang_chu')}}"><i class="sidebar-item-icon fa fa-th-large"></i>
-                            <span class="nav-label">Trang chủ</span>
-                        </a>
-                    </li>
-                    <li class="heading"></li>
-                    <li>
-                        <a href="">
-                            <i class="sidebar-item-icon ti-layout-accordion-list"></i>
-                            <span class="nav-label">Phiếu mượn</span><i class="fa fa-angle-left arrow"></i></a>
-                        
-                    </li>
-                    
-                    
-                </ul>
+                <x-admin-menu-component/>
                     
             </div>
         </nav>

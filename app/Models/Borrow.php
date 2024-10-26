@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Borrow extends Model
 {
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'Borrow_user_id'); 
+    }
+    public function details()
+    {
+        return $this->hasMany(Borrow_detail::class, 'Borrow_id');
+    }
     protected $fillable = [
         'Borrow_user_id',
         'Borrow_admin_id',
@@ -15,9 +23,9 @@ class Borrow extends Model
         'Update_date',
         'Update_by',
         'Status',
-        'IsAction'
+        'IsAction',
     ];
-    protected $primaryKey = 'Id';
+    protected $primaryKey ='Id';
     protected $table = 'borrow';
     public $timestamps = false;
 }

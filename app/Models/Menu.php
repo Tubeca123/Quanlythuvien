@@ -10,6 +10,7 @@ class Menu extends Model
     use HasFactory;
     protected $fillable=[
         'Name',
+        'Role_id',
         'Item_level',
         'Parent_level',
         'Item_oder',

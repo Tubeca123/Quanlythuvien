@@ -74,6 +74,7 @@
 @php
     $topLevelMenus = $mnitems->where('Item_level', 1)->sortBy('Item_order');
 @endphp
+
 <ul class="side-menu metismenu">
     @foreach ($topLevelMenus as $item)
         @php
@@ -82,27 +83,32 @@
             $countSubMenus = $subMenus->count();
         @endphp
 
-        @if ($countSubMenus > 0)
-            <li class="menu-item-has-children">
-                <a href="#">
-                    <i class="sidebar-item-icon {{ $item->Icon }}"></i>
-                    <span class="nav-label">{{ $item->Name }}</span>
-                </a>
-                <ul class="nav-2-level">
-                    @foreach ($subMenus as $submenu)
-                        <li>
-                            <a href="{{ route($submenu->Route) }}">{{ $submenu->Name }}</a>
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-        @else
-            <li>
-                <a href="{{ route($item->Route) }}">
-                    <i class="sidebar-item-icon {{ $item->Icon }}"></i>
-                    <span class="nav-label">{{ $item->Name }}</span>
-                </a>
-            </li>
+        
+        @if ($item->Role_id == Auth::user()->Role_id)
+            @if ($countSubMenus > 0)
+                <li class="menu-item-has-children">
+                    <a href="#">
+                        <i class="sidebar-item-icon {{ $item->Icon }}"></i>
+                        <span class="nav-label">{{ $item->Name }}</span>
+                    </a>
+                    <ul class="nav-2-level">
+                        @foreach ($subMenus as $submenu)
+                            @if ($submenu->Role_id == Auth::user()->Role_id)
+                                <li>
+                                    <a href="{{ route($submenu->Route) }}">{{ $submenu->Name }}</a>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </li>
+            @else
+                <li>
+                    <a href="{{ route($item->Route) }}">
+                        <i class="sidebar-item-icon {{ $item->Icon }}"></i>
+                        <span class="nav-label">{{ $item->Name }}</span>
+                    </a>
+                </li>
+            @endif
         @endif
     @endforeach
 </ul>

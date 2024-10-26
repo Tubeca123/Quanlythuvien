@@ -21,7 +21,7 @@
                         <div class="m-b-5 font-bold">Thông tin sinh viên </div>
                         <ul class="list-unstyled m-t-10">
                             <li class="m-b-5">
-                                <span class="font-strong">Tên:</span> {{Auth::user()->Id}}
+                                <span class="font-strong">Tên:</span> {{Auth::user()->Full_name }}
                             </li>
                             <li class="m-b-5">
                                 <span class="font-strong">Email:</span>{{Auth::user()->Email }}
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-
+        @if (session('borrow') && count(session('borrow')) > 0)
         <table class="table table-striped no-margin table-invoice">
             <thead>
                 <tr>
@@ -65,6 +65,7 @@
                 @endif
             </tbody>
         </table>
+        
         <table class="table no-border">
             <thead>
                 <tr>
@@ -83,9 +84,12 @@
                 </tr>
             </tbody>
         </table>
-        <div class="text-right">
-            <button class="btn btn-add-borrow" type="button"><i class="fa fa-print"></i> Mượn sách</button>
+        <div class="text-right ">
+            <button class="btn btn-primary btn-add-borrow" type="button"><i ></i>Tạo phiếu mượn </button>
         </div>
+        @else
+        <div class="alert alert-warning">Chưa có sách mượn.</div>
+        @endif
     </div>
 
 

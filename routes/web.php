@@ -8,7 +8,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\UserforController;
+use App\Http\Controllers\BorrowController;
 use App\Http\Middleware\CheckLogin;
+use App\Http\Controllers\AdminController;
+use App\Models\Borrow;
 
     // Route::get('/', function () {
     //     return view('welcome');
@@ -26,15 +29,18 @@ use App\Http\Middleware\CheckLogin;
     Route::post('/login', [UserController::class, 'handlogin'])->name('handlogin');
     Route::get('/logout', [UserController::class, 'handleLogout'])->name('handleLogout');//vd đây là link logout
 
-    Route::get('/', [UserController::class, 'Trangchu'])->name('trang_chu');
-    Route::post('/add-to-borrow/{id}', [UserforController::class, 'addtoborrow']);
+    Route::get('/', [UserforController::class, 'Trangchu'])->name('trang_chu');
     Route::get('/borrow_detail', [UserforController::class, 'detail'])->name('br_detail');
-    Route::post('/remove_book/{id}', [UserforController::class, 'removeBook']);
-    Route::post('/create_borrow', [UserforController::class, 'createBorrow']);
+    Route::get('/show_borrow_1', [UserforController::class, 'list_borrow_wait'])->name('br_1');
+    Route::get('/list_close_borrow', [UserforController::class, 'list_close_br'])->name('list_close_br');
+    Route::get('/book_wait_borrow/{Id}', [UserforController::class, 'book_wait'])->name('book_wait_br');
+    Route::get('/list_borrowing', [UserforController::class, 'list_borrowing'])->name('borrowing2');
+    Route::get('/list_borrow_done', [UserforController::class, 'done_br'])->name('borrow_done');
 
-    Route::prefix('trangchu')->middleware(CheckLogin::class)->group(function () {
-    
-    });
+    Route::post('/create_borrow', [BorrowController::class, 'createBorrow']);
+    Route::post('/destroy_borrow/{Id}',  [BorrowController::class, 'close_brow_wait']);
+    Route::post('/remove_book/{id}', [BorrowController::class, 'removeBook']);
+    Route::post('/add-to-borrow/{id}', [BorrowController::class, 'addtoborrow']);    
 
     Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
     
@@ -47,9 +53,12 @@ use App\Http\Middleware\CheckLogin;
     Route::post('/user_lock/{Id}', [UserController::class, 'lockuser'])->name('lock_user');
     Route::post('/user_role/{Id}', [UserController::class, 'roleuser'])->name('role_user');
     
+    Route::get('/list_borrow_new', [AdminController::class, 'Borrow_wait'])->name('borrow_new');
+    Route::get('/list_borrowing', [AdminController::class, 'Borrowing'])->name('borrowing');
+    Route::post('/add_borrow/{Id}',  [AdminController::class, 'add_borrow']);
+    Route::get('/check_book_wait_borrow/{Id}', [AdminController::class, 'get_return'])->name('check_borrow');
+    Route::post('/return_borrow/{Id}',  [AdminController::class, 'return_borrow'])->name('return_borrow');
 
-
-    
     Route::get('/books_list', [BookController::class, 'index'])->name('show_list_book');
     Route::get('/create_books', [BookController::class, 'create'])->name('create_book');
     Route::post('/create_books', [BookController::class, 'store'])->name('handle_create_book');

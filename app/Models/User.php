@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use HasFactory;
     protected $fillable = [
-        'Sv_id',
+        'SV_id',
         'Full_name',
         'Email',
         'Phone',
@@ -21,7 +21,7 @@ class User extends Authenticatable
         'Create_by',
         'Update_date',
         'Update_by',
-        'IsActive',
+        'IsAction',
         'Pw'
     ];
     protected $primaryKey = 'Id';

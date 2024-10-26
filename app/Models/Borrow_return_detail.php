@@ -4,23 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Borrow_detail extends Model
+class Borrow_return_detail extends Model
 {
-    public function book()
-    {
-        return $this->belongsTo(Book::class, 'Book_id');
-    }
     protected $fillable = [
-        'Borrow_id',
+        'Borrow_return_id',
         'Book_id',
+        'Error',
         'Create_date',
         'Create_by',
         'Update_date',
         'Update_by',
         'Status',
-        'IsAction'
+        'IsAction',
     ];
-    protected $primaryKey = 'Id';
-    protected $table = 'borrow_details';
+    protected $primaryKey ='Id';
+    protected $table = 'borrow_return_details';
     public $timestamps = false;
 }

@@ -11,127 +11,59 @@ use Illuminate\Support\Facades\Auth;
 
 class UserforController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //trang chủ
+    public function Trangchu()
     {
-        //
+        $books = Book::with(['Category', 'Publisher'])->get();
+        return view('clinet.index', ['books' => $books]);
     }
-
-
-
-    public function addtoborrow($id)
+    //danh sách phiếu chờ
+    public function list_borrow_wait()
     {
-        $book = Book::where('Id', $id)->first();
-
-        $borrow = session()->get('borrow', []);
-
-        if (isset($borrow[$book->Id])) {
-            return response()->json(['warning' => true, 'message' => 'Giới hạn một quyển sách']);
-        } else {
-            $borrow[$book->Id] = [
-                'image' => $book->Image,
-                'name' => $book->Name,
-
-            ];
-            $count = count($borrow);
-            session()->put('borrow', $borrow);
-            return response()->json(['success' => true, 'message' => 'Thêm vào phiếu bảo trì thành công', 'count' => $count]);
-        }
+        $user = Auth::user()->Id;
+        // dd($user);
+        $br = Borrow::where('Borrow_user_id', $user)->where('Status', 1)->get();
+        // dd($br);
+        return view('clinet.user.borrow_wait', ['br' => $br]);
     }
-
-    public function removeBook($id)
+    //danh sách phiếu đang mượn
+    public function list_borrowing()
     {
-        if ($id) {
-            $book = session()->get('borrow');
-            if (isset($book[$id])) {
-                unset($book[$id]);
-                session()->put('borrow', $book);
-            }
-            return response()->json(['success' => true, 'message' => 'Đã xóa sách khỏi phiếu mượn']);
-        }
-        return response()->json(['success' => false, 'message' => 'Không tìm sách']);
+        $user = Auth::user()->Id;
+        // dd($user);
+        $br = Borrow::where('Borrow_user_id', $user)->where('Status', 2)->get();
+        // dd($br);
+        return view('clinet.user.borrowing_list', ['br' => $br]);
     }
-
-    public function createBorrow(Request $request)
+    // thông tin danh sách trong phiếu
+    public function book_wait(String $id)
     {
-        $br = new Borrow();
-        $br->Borrow_user_id = Auth::user()->Id;
-        $br->create_date = now();
-        $br->Return_date = now()->addMonth();
-        $br->IsAction = 1;
-        $br->save();
+        // dd($id);
+        $br = Borrow_detail::with('book')->where('Borrow_id', $id)->get();
 
-        $br_id = $br->Id;
-        $borrow = session()->get('borrow', []);
-
-        foreach ($borrow as $book_id => $book) {
-            $br_detail = new Borrow_detail();
-
-            $br_detail->Borrow_id = $br_id; // Liên kết với phiếu mượn
-
-            $br_detail->Book_id = $book_id; // ID sách
-            $br_detail->Create_date=now();
-            $br_detail->IsAction=1;
-            $br_detail->save(); // Lưu chi tiết phiếu mượn
-        }
-        session()->forget('borrow');
-
-        // 4. Trả về phản hồi thành công
-        return response()->json(['success' => true, 'message' => 'Tạo phiếu mượn thành công']);
+        return view('clinet.user.book_in_borrow', ['br' => $br]);
     }
-
+    // danh sách phiếu đã hủy
+    public function list_close_br()
+    {
+        $user = Auth::user()->Id;
+        // dd($user);
+        $br = Borrow::where('Borrow_user_id', $user)->where('Status', 0)->get();
+        // dd($br);
+        return view('clinet.user.list_borrow_close', ['br' => $br]);
+    }
+    // danh sách phiếu đã hủy
+    public function done_br()
+    {
+        $user = Auth::user()->Id;
+        // dd($user);
+        $br = Borrow::where('Borrow_user_id', $user)->where('Status', 3)->get();
+        // dd($br);
+        return view('clinet.user.list_borrow_done', ['br' => $br]);
+    }
+    // phiếu đang tạo 
     public function detail()
     {
-        return view("clinet.borrow_detail");
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view("clinet.borrow.borrow_detail");
     }
 }
