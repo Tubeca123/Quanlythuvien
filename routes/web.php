@@ -11,6 +11,7 @@ use App\Http\Controllers\UserforController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Middleware\CheckLogin;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MenuController;
 use App\Models\Borrow;
 
     // Route::get('/', function () {
@@ -53,11 +54,14 @@ use App\Models\Borrow;
     Route::post('/user_lock/{Id}', [UserController::class, 'lockuser'])->name('lock_user');
     Route::post('/user_role/{Id}', [UserController::class, 'roleuser'])->name('role_user');
     
+    Route::get('/list_menu', [MenuController::class, 'index'])->name('show_list_menu');
+
     Route::get('/list_borrow_new', [AdminController::class, 'Borrow_wait'])->name('borrow_new');
     Route::get('/list_borrowing', [AdminController::class, 'Borrowing'])->name('borrowing');
     Route::post('/add_borrow/{Id}',  [AdminController::class, 'add_borrow']);
     Route::get('/check_book_wait_borrow/{Id}', [AdminController::class, 'get_return'])->name('check_borrow');
     Route::post('/return_borrow/{Id}',  [AdminController::class, 'return_borrow'])->name('return_borrow');
+    Route::get('/book_wait_borrow/{Id}', [AdminController::class, 'book_in_wait'])->name('book_in_wait');
 
     Route::get('/books_list', [BookController::class, 'index'])->name('show_list_book');
     Route::get('/create_books', [BookController::class, 'create'])->name('create_book');

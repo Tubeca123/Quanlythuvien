@@ -30,7 +30,9 @@ class BorrowController extends Controller
             ];
             $count = count($borrow);
             session()->put('borrow', $borrow);
-            return response()->json(['success' => true, 'message' => 'Thêm vào phiếu bảo trì thành công', 'count' => $count]);
+            // return response()->json(['success' => true, 'message' => 'Thêm vào phiếu mượn', 'count' => $count]);
+            return response()->json(['success' => true, 'message' => 'Thêm vào phiếu mượn', 'count' => $count, 'data' =>  $borrow]);
+
         }
     }
 

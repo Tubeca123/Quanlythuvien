@@ -34,6 +34,7 @@
                         <th>Trạng thái</th>
                     </tr>
                 </thead>
+                
                 <tfoot>
                     <tr>
                         <th>Hình ảnh</th>

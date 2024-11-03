@@ -23,7 +23,7 @@
         <form  action="{{route("handregister")}}" method="post">
             @csrf 
 
-            <input type="hidden" name="role" id="" value=1 >
+            <input type="hidden" name="role" id="" value=2 >
             <h2 class="login-title">Đăng ký</h2>
 
             <div class="form-group">

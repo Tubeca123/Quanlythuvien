@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Menu;
 
 use Illuminate\Http\Request;
 
@@ -11,9 +12,10 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        $mn=Menu::all();
+        return view('admin.pages.Menu.index',['mn'=>$mn]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */

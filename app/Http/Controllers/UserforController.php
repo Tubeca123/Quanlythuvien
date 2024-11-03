@@ -22,7 +22,7 @@ class UserforController extends Controller
     {
         $user = Auth::user()->Id;
         // dd($user);
-        $br = Borrow::where('Borrow_user_id', $user)->where('Status', 1)->get();
+        $br = Borrow::where('Borrow_user_id', $user)->where('Status',  1)->get();
         // dd($br);
         return view('clinet.user.borrow_wait', ['br' => $br]);
     }

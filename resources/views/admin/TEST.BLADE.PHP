@@ -1,156 +1,133 @@
-@extends('admin.master_layout')
-
+@extends('clinet.master_layout')
+<style>
+    div.dataTables_filter {
+        float: right;
+    }
+</style>
 @section('page_content')
-<main id="main" class="main">
-    <div class="container shadow p-5">
-        <div class="row pb-2">
-            <h2>Sửa thông tin sách</h2>
+
+
+<!-- START PAGE CONTENT -->
+<div class="page-heading">
+    <h1 class="page-title">Danh sách</h1>
+    <ol class="breadcrumb">
+        <li class="">
+            <a href="{{route('br_detail')}}"  ><button class="btn btn-success btn-fix "> Phiếu mượn</button><i class="la la-home font-20"></i></a>
+        </li>
+    </ol>
+</div>
+<div class="page-content fade-in-up">
+    <div class="ibox">
+        <div class="ibox-body">
+            <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sách</th>
+                        <th>Thể loại</th>
+                        <th>Nhà xuất bản</th>
+                        <th>Tác giả</th>
+                        <th>Trạng thái</th>
+                        <th>Công cụ</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sách</th>
+                        <th>Thể loại</th>
+                        <th>Nhà xuất bản</th>
+                        <th>Tác giả</th>
+                        <th>Trạng thái</th>
+                        <th>Công cụ</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach($books as $book)
+                    <tr id="row_{{ $book->Id }}">
+                        <td>
+                            <img src="{{ $book->Image }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                        </td>
+                        <td>{{ $book->Name }}</td>
+                        <td>{{ $book->Category ? $book->Category->Name : 'Không có thể loại' }}</td>
+                        <td>{{ $book->Publisher ? $book->Publisher->Name : 'Không có thể loại' }}</td>
+                        <td>{{ $book->author }}</td>
+                        @if($book->Stock >0)
+                        <td><button class="btn btn-success"> vẫn còn</button></td>
+                        <td>
+                            <a class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" title="Xem chi tiết">
+                                <i class="fa fa-eye font-14"></i></a>
+                            <a class="btn btn-success btn-sm btn-plus" data-id="{{ $book->Id }}" title="Mượn">
+                                <i class="ti ti-plus"></i></a>
+                        </td>
+                        @else
+                        <td><button class="btn btn-warning"> hết sách</button></td>
+                        <td>
+                            <a class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" title="Xem chi tiết">
+                                <i class="fa fa-eye font-14"></i></a>
+                            
+                        </td>
+                        @endif
+                        
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-
-        <!-- Laravel form -->
-        <form method="POST" action="{{ route('update_book', ['Id' => $books->Id]) }}"  >
-            @csrf
-            @method('PUT')
-            <input type="hidden" name="Id" value="{{$books->Id }}">
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Tên </label>
-                <div class="col-sm-10">
-                    <input name="Name" type="text" class="form-control" value="{{ old('Name', $books->Name) }}" placeholder="Mời nhập">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Thông tin </label>
-                <div class="col-sm-10">
-                    <input name="Name" type="text" class="form-control" value="{{ old('About', $books->About) }}" placeholder="Mời nhập">
-                </div>
-            </div>
-
-
-
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Thể loại</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="Categories_id" required>
-                        <option value="">Chọn thể loại</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->Id }}" {{ old('Categories_id', $books->Categories_id) == $category->Id ? 'selected' : '' }}>
-                                {{ $category->Name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Nhà xuất bản</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="Publisher_id" required>
-                        <option value="">Chọn nhà xuất bản</option>
-                        @foreach($publis as $publis)
-                            <option value="{{ $publis->Id }}" {{ old('Publisher_id', $books->Publisher_id) == $publis->Id ? 'selected' : '' }}>
-                                {{ $publis->Name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Số lượng</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="number" name="Quantity" value="{{ old('Quantity', $books->Quantity) }}">
-                </div>
-            </div>
-            
-
-            
-            <!-- Ngày thêm -->
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Ngày thêm</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Created_date" value="{{ $books->Create_date }}" readonly>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Tác giả</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="text" name="author" value="{{ old('author', $books->author) }}">
-                </div>
-            </div>
-
-            <!-- Người thêm -->
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Người thêm</label>
-                <div class="col-sm-10">
-                    <input name="Create_by" type="text" class="form-control" value="{{ old('Create_by', $books->Create_by) }}" readonly>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Nhà xuất bản</label>
-                <div class="col-sm-10">
-                    <input name="Create_by" type="text" class="form-control" value="{{ old('Publised_name', $books->Publised_name) }}" readonly>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Năm sản xuất</label>
-                <div class="col-sm-10">
-                    <input name="Create_by" type="text" class="form-control" value="{{ old('Publised_year', $books->Publised_year) }}" readonly>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Người thêm</label>
-                <div class="col-sm-10">
-                    <input name="Create_by" type="text" class="form-control" value="{{ old('Create_by', $books->Create_by) }}" readonly>
-                </div>
-            </div>
-
-            
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Ngày thêm</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Update_date" value="{{ old('Create_date', $books->Create_date) }}" readonly>
-                </div>
-            </div>
-            <!-- Ngày sửa -->
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Ngày sửa</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="Update_date" value="{{ \Carbon\Carbon::now() }}" readonly>
-                </div>
-            </div>
-
-            <!-- Người sửa -->
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Người sửa</label>
-                <div class="col-sm-10">
-                    <input name="Update_by" type="text" class="form-control" value="{{ old('Update_by') }}" placeholder="Nhập người sửa">
-                </div>
-            </div>
-
-            <!-- Hiển thị -->
-            <div class="form-group at-3 mb-5">
-                <label>
-                    <input type="checkbox" name="IsActive" {{ old('IsActive', $books->IsActive) ? 'checked' : '' }}>
-                    Hiển thị
-                </label>
-            </div>
-
-            <!-- Nút lưu -->
-            <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i> Lưu</button> 
-            <a href="{{route('show_list_book') }}" class="btn btn-lg btn-warning p-2">Quay lại</a>
-        </form>
     </div>
-</main>
+</div>
+<!-- END PAGE CONTENT -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/bootstrap-duallistbox.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-
-            
+<script >
+    $(function() {
+        $('#example-table').DataTable({
+            pageLength: 10,
+            language: {
+                lengthMenu: "Hiển thị _MENU_ ",
+                search: "Tìm kiếm:",
+                zeroRecords: "Không tìm thấy dữ liệu",
+                info: "Hiển thị từ _START_ đến _END_ của _TOTAL_ mục",
+                infoEmpty: "Hiển thị từ 0 đến 0 của 0 mục",
+                infoFiltered: "(được lọc từ _MAX_ tổng số mục)",
+                paginate: {
+                    first: "Đầu",
+                    last: "Cuối",
+                    next: "Tiếp",
+                    previous: "Trước"
+                }
+            }
+        });
+    });
+    $(document).on('click', '.btn-plus', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/add-to-borrow/' + id,
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success(response.message);
+                } else if (response.warning) {
+                    toastr.warning(response.message);
+                } 
+            },
+            error: function() {
+                alert('Đã xảy ra lỗi, vui lòng thử lại sau.');
+            }
+        });
+    });
+</script>
 @endsection

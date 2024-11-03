@@ -45,7 +45,7 @@
                         <td>{{$brr->Create_date}}</td>
 
                         <td>
-                            <a class="btn btn-default btn-xs m-r-5" href="{{route('book_wait_br', ['Id'=>$brr['Id']])}}" data-toggle="tooltip" title="Xem chi tiết">
+                            <a class="btn btn-default btn-xs m-r-5" href="{{route('book_in_wait', ['Id'=>$brr['Id']])}}" data-toggle="tooltip" title="Xem chi tiết">
                                 <i class="fa fa-eye font-14"></i></a>
                             <a class="btn btn-success btn-sm btn-add-borrow" data-id="{{ $brr->Id }}" title="Xác nhận phiếu ">
                                 <i class="ti-arrow-circle-up"></i></a>

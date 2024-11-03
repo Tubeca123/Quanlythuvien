@@ -86,6 +86,15 @@ class AdminController extends Controller
 
     }
 
+    public function book_in_wait(String $id)
+    {
+        $br_ok= Borrow::find($id);
+        // dd($id);
+        $br = Borrow_detail::with('book')->where('Borrow_id', $id)->get();
+
+        return view('admin.pages.Borrow.book_in_borrow_wait', ['br' => $br,'br_ok' => $br_ok]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

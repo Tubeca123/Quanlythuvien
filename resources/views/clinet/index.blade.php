@@ -1,4 +1,4 @@
-@extends('clinet.master_layout')
+@extends('clinet.borrow_layout')
 <style>
     div.dataTables_filter {
         float: right;
@@ -12,7 +12,7 @@
     <h1 class="page-title">Danh sách</h1>
     <ol class="breadcrumb">
         <li class="">
-            <a href="{{route('br_detail')}}"  ><button class="btn btn-success btn-fix "> Phiếu mượn</button><i class="la la-home font-20"></i></a>
+            <a href="{{route('br_detail')}}"><button class="btn btn-success btn-fix "> Phiếu mượn</button><i class="la la-home font-20"></i></a>
         </li>
     </ol>
 </div>
@@ -65,10 +65,10 @@
                         <td>
                             <a class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" title="Xem chi tiết">
                                 <i class="fa fa-eye font-14"></i></a>
-                            
+
                         </td>
                         @endif
-                        
+
                     </tr>
                     @endforeach
                 </tbody>
@@ -88,7 +88,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script >
+<script>
+
     $(function() {
         $('#example-table').DataTable({
             pageLength: 10,
@@ -119,10 +120,39 @@
             },
             success: function(response) {
                 if (response.success) {
+                    // console.log(response.data);
+                    let html = "";
+                    let data = Object.values(response.data);
+                    
+
+                    data.map(item => {
+                        // Create a table row for each item
+                        html += `
+                                <tr id="detail-${item.id}">
+                                    <td><img src="${item.image}" alt="" style="width: 80px; height: 80px"></td>
+                                    <td>${item.name}</td>
+                                    <td>
+                                        <a class="btn btn-default btn-xs m-r-5" data-id="${item.id}" title="Xem chi tiết">
+                                            <i class="fa fa-eye font-14"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm btn-trash" data-id="${item.id}" title="Xóa">
+                                            <i class="ti ti-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            `;
+                    });
+                    console.log(html);
+                    
+                    // Now you can append `html` to your table body or wherever you need to display it
+                    document.getElementById('show_detail').innerHTML = html; // Replace 'yourTableBodyId' with the actual ID of your table body
+
+
+                    // window.location.reload();
                     toastr.success(response.message);
                 } else if (response.warning) {
                     toastr.warning(response.message);
-                } 
+                }
             },
             error: function() {
                 alert('Đã xảy ra lỗi, vui lòng thử lại sau.');
