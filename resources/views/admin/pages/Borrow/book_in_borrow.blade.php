@@ -71,36 +71,40 @@
                 </tbody>
             </table>
             <table class="table no-border">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th width="15%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-right">
-                    <td class="font-bold font-18">Ngày mượn:</td>
-                    <td class="font-bold font-18">{{ $br->Create_date }}</td> <!-- Hiển thị ngày hiện tại -->
-                </tr>
-                <tr class="text-right">
-                    <td class="font-bold font-18">Ngày trả của phiếu mượn:</td>
-                    <td class="font-bold font-18">{{ $br->Return_date }}</td> <!-- Hiển thị ngày hiện tại -->
-                </tr>
-                <tr class="text-right">
-                    <td class="font-bold font-18">Ngày trả:</td>
-                    <td class="font-bold font-18">{{ \Carbon\Carbon::now()->format('Y-m-d') }}</td> <!-- Thay thế bằng biến chứa ngày trả -->
-                </tr>
-            </tbody>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th width="15%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-right">
+                        <td class="font-bold font-18">Ngày mượn:</td>
+                        <td class="font-bold font-18">{{ $br->Create_date }}</td> <!-- Hiển thị ngày hiện tại -->
+                    </tr>
+                    <tr class="text-right">
+                        <td class="font-bold font-18">Ngày trả của phiếu mượn:</td>
+                        <td class="font-bold font-18">{{ $br->Return_date }}</td> <!-- Hiển thị ngày hiện tại -->
+                    </tr>
+                    <tr class="text-right">
+                        <td class="font-bold font-18">Ngày trả:</td>
+                        <td class="font-bold font-18">{{ \Carbon\Carbon::now()->format('Y-m-d') }}</td> <!-- Thay thế bằng biến chứa ngày trả -->
+                    </tr>
+                </tbody>
             </table>
             <div class="text-right">
                 <button class="btn btn-primary" type="button" onclick="window.history.back();">
                     <i></i> Quay lại
                 </button>
-                <button type="button" class="btn btn-primary" onclick="submitReturnForm()">
+
+                <button id="traphieu" type="button" class="btn btn-primary" onclick="submitReturnForm()">
                     <i></i> Trả phiếu
                 </button>
+                <a id="check" href="{{route('view_borrow', ['Id'=>$br['Id']])}}" style="display: none;" type="button" class="btn btn-primary">
+                    <i></i> Chi tiết
+                </a>
             </div>
-            </form>
+        </form>
 
 
     </div>
@@ -133,10 +137,10 @@
 
 <script>
     function submitReturnForm() {
-        const formData = $('#return-form').serialize(); 
+        const formData = $('#return-form').serialize();
 
         $.ajax({
-            url: "{{ route('return_borrow', $br->Id) }}", 
+            url: "{{ route('return_borrow', $br->Id) }}",
             type: "POST",
             data: formData + "&_token={{ csrf_token() }}",
             success: function(response) {
@@ -145,10 +149,13 @@
                         position: "top-end",
                         icon: "success",
                         title: "Phiếu trả đã được tạo thành công",
+
                         toast: true,
                         showConfirmButton: false,
                         timer: 1000
                     });
+                    $('#traphieu').hide();
+                    $('#check').show();
                 } else {
                     toastr.error('Có lỗi xảy ra. Vui lòng thử lại!');
                 }

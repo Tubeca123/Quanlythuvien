@@ -271,7 +271,7 @@
                                 </tr>
                                 @endforeach
                                 @else
-                                <div class="alert alert-warning">Chưa có sách mượn.</div>
+                                <div class="alert alert-warning" id="ifchua">Chưa có sách mượn.</div>
                                 @endif
                             </tbody>
                         </table>

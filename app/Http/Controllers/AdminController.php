@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Book;
-use App\Models\User;
+
+
 use App\Models\Borrow;
 use App\Models\Borrow_detail;
 use App\Models\Borrow_return;
 use App\Models\Borrow_return_detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendReturnLate;
+use App\Models\Punish;
 
 class AdminController extends Controller
 {
@@ -23,11 +26,11 @@ class AdminController extends Controller
     }
     public function add_borrow($id)
     {
-
         $br = Borrow::find($id);
         if ($br) {
 
             $br->Status = 2;
+
             $br->save();
 
             return response()->json(['success' => true, 'message' => 'Xác nhận  thành công']);
@@ -46,53 +49,67 @@ class AdminController extends Controller
     {
         $book = Borrow_detail::with('book')->where('Borrow_id', $id)->get();
         $sv = Borrow::with('user')->where('Id', $id)->first();
-        $br=Borrow::find($id);
-        return view('admin.pages.Borrow.book_in_borrow', ['br'=>$br,'book' => $book,'sv'=>$sv]);
+        $br = Borrow::find($id);
+        return view('admin.pages.Borrow.book_in_borrow', ['br' => $br, 'book' => $book, 'sv' => $sv]);
     }
-    public function return_borrow(Request $rq,$id)
+    public function return_borrow(Request $rq, $id)
     {
-        $br =Borrow::find($id);
-        
-        if(!$br)
-        {
+        $br = Borrow::find($id);
+
+        if (!$br) {
             return response()->json(['success' => false, 'message' => 'Phiếu mượn không tồn tại.']);
         }
 
-        $br->Status=3;
+        $br->Status = 3;
         $br->Save();
 
         $br_return = new Borrow_return();
-        $br_return->Borrow_id= $id;
+        $br_return->Borrow_id = $id;
         $br_return->Admin_id = Auth::user()->Id;
         $br_return->Return_date =  $br->Return_date;
-        $br_return->Create_date =now();
-        $br_return->IsAction =1;
+        $br_return->Create_date = now();
+        $br_return->IsAction = 1;
         $br_return->save();
-         
-        foreach ($br->details as $detail) {  
+
+        foreach ($br->details as $detail) {
             $status = $rq->input('status_' . $detail->Book_id);
-            
+
             $return_detail = new Borrow_return_detail();
-            
+
             $return_detail->Borrow_return_id = $br_return->Id;
             $return_detail->Book_id = $detail->Book_id;
-            $return_detail->Status = $status; 
-            $return_detail->Create_date=now();
-            $return_detail->IsAction=1;
+            $return_detail->Status = $status;
+            $return_detail->Create_date = now();
+            $return_detail->IsAction = 1;
             $return_detail->save();
+
+            
+
+            if($return_detail->Status ==0 || $return_detail->Status ==2)
+            {
+                $punish = new Punish();
+                $punish->Return_detail_id = $return_detail->Id;
+                $punish->Admin_id=Auth::User()->Id;
+                $punish->User_id = $br->user->Id;
+                $punish->Status= $return_detail->Status;
+                $punish->Price =Null;
+                $punish->Create_date=now();
+                $punish->IsActive =1;
+                $punish->save();
+            }
+
         }
 
         return  response()->json(['success' => true, 'message' => 'Phiếu mượn đã được trả thành công.']);
-
     }
 
     public function book_in_wait(String $id)
     {
-        $br_ok= Borrow::find($id);
+        $br_ok = Borrow::find($id);
         // dd($id);
         $br = Borrow_detail::with('book')->where('Borrow_id', $id)->get();
 
-        return view('admin.pages.Borrow.book_in_borrow_wait', ['br' => $br,'br_ok' => $br_ok]);
+        return view('admin.pages.Borrow.book_in_borrow_wait', ['br' => $br, 'br_ok' => $br_ok]);
     }
 
     /**
@@ -116,7 +133,7 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**

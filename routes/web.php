@@ -6,19 +6,19 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\PunishController;
 use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\UserforController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Middleware\CheckLogin;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MenuController;
-use App\Models\Borrow;
 
     // Route::get('/', function () {
     //     return view('welcome');
     // })->name("welcome");
     
-
+ 
 
     Route::group(['prefix' => 'file-manager', 'middleware' => ['web']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -41,7 +41,9 @@ use App\Models\Borrow;
     Route::post('/create_borrow', [BorrowController::class, 'createBorrow']);
     Route::post('/destroy_borrow/{Id}',  [BorrowController::class, 'close_brow_wait']);
     Route::post('/remove_book/{id}', [BorrowController::class, 'removeBook']);
-    Route::post('/add-to-borrow/{id}', [BorrowController::class, 'addtoborrow']);    
+    Route::post('/add-to-borrow/{id}', [BorrowController::class, 'addtoborrow']); 
+    Route::get('/view/{Id}', [BorrowController::class, 'index'])->name('view_borrow'); 
+
 
     Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
     
@@ -59,6 +61,7 @@ use App\Models\Borrow;
     Route::get('/list_borrow_new', [AdminController::class, 'Borrow_wait'])->name('borrow_new');
     Route::get('/list_borrowing', [AdminController::class, 'Borrowing'])->name('borrowing');
     Route::post('/add_borrow/{Id}',  [AdminController::class, 'add_borrow']);
+    // Route::get('/add_borrow/{Id}',  [AdminController::class, 'add_borrow']);
     Route::get('/check_book_wait_borrow/{Id}', [AdminController::class, 'get_return'])->name('check_borrow');
     Route::post('/return_borrow/{Id}',  [AdminController::class, 'return_borrow'])->name('return_borrow');
     Route::get('/book_wait_borrow/{Id}', [AdminController::class, 'book_in_wait'])->name('book_in_wait');
@@ -83,6 +86,7 @@ use App\Models\Borrow;
     Route::get('/edit_publisher/{Id}', [PublisherController::class, 'edit'])->name('edit_publis');
     Route::put('/edit_publisher/{Id}', [PublisherController::class, 'update'])->name('update_publis');
     Route::delete('/destroy_publisher/{Id}', [PublisherController::class, 'destroy'])->name('destroy_publis') ;
+
 
     Route::get('/', [DashboardController::class, 'index'])->name('quanlytv');
     Route::get('/home', [DashboardController::class, 'show'])->name('home_brow');    

@@ -1,10 +1,9 @@
 <?php
 
+use App\Console\Commands\ReturnDateCommand;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\AdminController;
-
-use Illuminate\Support\Facades\Schedule;
+use Illuminate\Console\Scheduling\Schedule;
 
 
 Artisan::command('inspire', function () {
@@ -12,9 +11,10 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 
-Artisan::command('borrow:update-status', function () {
-    $controller = new AdminController();
-    $controller->updateLateStatus();
-})->describe('Cập nhật trạng thái của bảng Borrow nếu Return_date đã qua');
 
-Schedule::command('borrow:update-status')->daily();
+Artisan::command('app:return-date-command', function () {
+    $controller = new ReturnDateCommand();
+    $controller->handle();
+})->describe('Oke');
+
+app(Schedule::class)->command('app:return-date-command')->everyMinute();

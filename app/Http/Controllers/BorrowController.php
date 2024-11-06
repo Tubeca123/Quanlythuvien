@@ -7,11 +7,20 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Borrow;
 use App\Models\Borrow_detail;
 use App\Models\Book;
+use App\Models\Borrow_return;
+use App\Models\Borrow_return_detail;
+use App\Models\Punish;
 
 class BorrowController extends Controller
 {
     
-    
+    public function index($id)
+    {
+        $br = Borrow_return::where('Borrow_id', $id)->first();
+        $pn = Borrow_return_detail::with('book')->where('Borrow_return_id',$br->Id)->get();
+        
+        return view('admin.pages.Punish.index', ['pn' => $pn]);
+    }
 
     
     public function addtoborrow($id)

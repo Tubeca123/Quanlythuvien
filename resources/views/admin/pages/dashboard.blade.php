@@ -33,13 +33,15 @@
         </div>
 
         <div class="col-lg-3 col-md-6">
+        <a href="{{route('borrowing')}}">
             <div class="ibox bg-warning color-white widget-stat">
                 <div class="ibox-body">
-                    <h2 class="m-b-5 font-strong">$1570</h2>
-                    <div class="m-b-5">Phiếu muộn </div><i class="fa fa-money widget-stat-icon"></i>
-                    <div><i class="fa fa-level-up m-r-5"></i><small>22% higher</small></div>
+                    <h2 class="m-b-5 font-strong">{{ \App\Models\Borrow::where('status', 4)->count() }}</h2>
+                    <div class="m-b-5">Phiếu muộn </div><i class="ti ti-time widget-stat-icon"></i>
+                    
                 </div>
             </div>
+        </a>
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="ibox bg-danger color-white widget-stat">
@@ -84,6 +86,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-lg-4">
             <div class="ibox">
                 <div class="ibox-head">

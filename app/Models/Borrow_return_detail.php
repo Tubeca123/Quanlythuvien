@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Borrow_return_detail extends Model
 {
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'Book_id');
+    }
     protected $fillable = [
         'Borrow_return_id',
         'Book_id',

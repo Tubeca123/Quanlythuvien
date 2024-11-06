@@ -147,7 +147,7 @@
                     // Now you can append `html` to your table body or wherever you need to display it
                     document.getElementById('show_detail').innerHTML = html; // Replace 'yourTableBodyId' with the actual ID of your table body
 
-
+                    $('#ifchua').hide();
                     // window.location.reload();
                     toastr.success(response.message);
                 } else if (response.warning) {

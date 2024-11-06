@@ -18,7 +18,7 @@ class PublisherController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Hiện trang tất cả các nhà xuất bản bằng get
      */
     public function create()
     {
@@ -27,7 +27,7 @@ class PublisherController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * tạo nhà xuất bản bằng post
      */
     public function store(Request $request)
     {
@@ -90,7 +90,7 @@ class PublisherController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Hiện trang sửa nhà xuất bản bằng get
      */
     public function edit(string $id)
     {
@@ -99,7 +99,7 @@ class PublisherController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * tạo nhà xuất bản bằng post
      */
     public function update(Request $rqt, string $id)
     {
