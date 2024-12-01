@@ -47,7 +47,7 @@
                                 <div class="m-t-20">
                                     <img class="img-circle" src="{{asset("assets/img/users/u3.jpg")}}" />
                                 </div>
-                                <h5 class="font-strong m-b-10 m-t-10">{{"$user->Full_name"}}</h5>
+                                <h5 class="font-strong m-b-10 m-t-10">{{ $user ? $user->Full_name : 'Không có tên'}}</h5>
                                 <!-- <div class="m-b-20 text-muted">Web Developer</div> -->
                                 <div class="profile-social m-b-20">
                                     <a href="javascript:;"><i class="fa fa-twitter"></i></a>

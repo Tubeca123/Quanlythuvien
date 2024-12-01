@@ -27,9 +27,9 @@ $(function() {
     new Chart(ctx, {type: 'line', data: lineData, options:lineOptions});
 
     // Bar Chart example
-
+    
     var barData = {
-        labels: ["Sunday", "Munday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        labels: ["Sun", "Munday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         datasets: [
             {
                 label: "Data 1",
@@ -54,7 +54,7 @@ $(function() {
 
     // doughnut chart example
 
-    var doughnutData = {
+    var doughnutData = {    
         labels: ["App","Software","Laptop" ],
         datasets: [{
             data: [200,40,60],

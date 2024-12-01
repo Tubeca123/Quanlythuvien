@@ -47,7 +47,7 @@
                         <td>
                             <a class="btn btn-default btn-xs m-r-5" href="{{route('book_in_wait', ['Id'=>$brr['Id']])}}" data-toggle="tooltip" title="Xem chi tiết">
                                 <i class="fa fa-eye font-14"></i></a>
-                            <a class="btn btn-success btn-sm btn-add-borrow" data-id="{{ $brr->Id }}" title="Xác nhận phiếu ">
+                            <a class="btn btn-success btn-sm btn-add-borrow" id="confirmbr" data-id="{{ $brr->Id }}" title="Xác nhận phiếu ">
                                 <i class="ti-arrow-circle-up"></i></a>
                         </td>
                     </tr>
@@ -119,6 +119,7 @@
                                     timer: 1000
                                 });
                                 $('#row_' + _id).remove();
+                                $('#confirmbr').hide();
                             } else {
                                 toastr.error('Xac nhận  không thành công');
                             }

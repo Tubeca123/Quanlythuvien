@@ -13,16 +13,23 @@ use App\Models\Punish;
 
 class BorrowController extends Controller
 {
-    
+
     public function index($id)
     {
+        $sv = Borrow::with('user')->where('Id', $id)->first();
         $br = Borrow_return::where('Borrow_id', $id)->first();
-        $pn = Borrow_return_detail::with('book')->where('Borrow_return_id',$br->Id)->get();
-        
-        return view('admin.pages.Punish.index', ['pn' => $pn]);
+        $br_rt = Borrow_return_detail::with('book')->where('Borrow_return_id', $br->Id)->get();
+        $pn = collect();
+
+        foreach ($br_rt as $item) {
+            $punishRecords = Punish::with('return_detail')->where('Return_detail_id', $item->Id)->get();
+            $pn = $pn->merge($punishRecords); 
+        }
+
+        return view('admin.pages.Punish.punish_layout', ['br_rt' => $br_rt, 'sv' => $sv, 'pn' => $pn]);
     }
 
-    
+
     public function addtoborrow($id)
     {
         $book = Book::where('Id', $id)->first();
@@ -41,7 +48,6 @@ class BorrowController extends Controller
             session()->put('borrow', $borrow);
             // return response()->json(['success' => true, 'message' => 'Thêm vào phiếu mượn', 'count' => $count]);
             return response()->json(['success' => true, 'message' => 'Thêm vào phiếu mượn', 'count' => $count, 'data' =>  $borrow]);
-
         }
     }
 
@@ -87,7 +93,7 @@ class BorrowController extends Controller
         return response()->json(['success' => true, 'message' => 'Tạo phiếu mượn thành công']);
     }
 
-    
+
     public function close_brow_wait($id)
     {
 

@@ -13,7 +13,7 @@ use App\Http\Controllers\BorrowController;
 use App\Http\Middleware\CheckLogin;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MenuController;
-
+use App\Http\Controllers\StatisticController;
     // Route::get('/', function () {
     //     return view('welcome');
     // })->name("welcome");
@@ -44,6 +44,8 @@ use App\Http\Controllers\MenuController;
     Route::post('/add-to-borrow/{id}', [BorrowController::class, 'addtoborrow']); 
     Route::get('/view/{Id}', [BorrowController::class, 'index'])->name('view_borrow'); 
 
+    Route::get('/detail/{Id}', [BookController::class, 'detail'])->name('detail_book');
+
 
     Route::prefix('admin')->middleware(CheckLogin::class)->group(function () {
     
@@ -56,6 +58,9 @@ use App\Http\Controllers\MenuController;
     Route::post('/user_lock/{Id}', [UserController::class, 'lockuser'])->name('lock_user');
     Route::post('/user_role/{Id}', [UserController::class, 'roleuser'])->name('role_user');
     
+    Route::put('/punish/create', [PunishController::class, 'create'])->name('punish.create');
+
+
     Route::get('/list_menu', [MenuController::class, 'index'])->name('show_list_menu');
 
     Route::get('/list_borrow_new', [AdminController::class, 'Borrow_wait'])->name('borrow_new');
@@ -89,7 +94,8 @@ use App\Http\Controllers\MenuController;
 
 
     Route::get('/', [DashboardController::class, 'index'])->name('quanlytv');
-    Route::get('/home', [DashboardController::class, 'show'])->name('home_brow');    
+    Route::get('/search', [DashboardController::class, 'search'])->name('search_dashboard');
+    Route::get('/statistic', [StatisticController::class, 'getStatistics']);    
 
 
 

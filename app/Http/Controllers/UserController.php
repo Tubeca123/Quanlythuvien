@@ -148,7 +148,7 @@ class UserController extends Controller
      */
     public function profile(string $id)
     {
-        // dd($id);
+        
         $user = User::find($id);
         return view('admin.pages.User.profile', ['user' => $user]);
     }

@@ -15,7 +15,7 @@
     <!-- THEME STYLES-->
     <link href="{{asset("assets/css/main.min.css")}}" rel="stylesheet" />
     <!-- PAGE LEVEL STYLES-->
-
+    @yield('link')
     <!-- ajax -->
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -170,7 +170,7 @@
                             <img src="{{asset("assets/img/admin-avatar.png")}}" />
                             <span></span>{{Auth::user()->Full_name ?? "admin"}}<i class="fa fa-angle-down m-l-5"></i></a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="profile.html"><i class="fa fa-user"></i>Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{ route('profile', Auth::user()->Id) }}"><i class="fa fa-user"></i>Trang cá nhân</a>
                             <a class="dropdown-item" href="{{ route('profile', Auth::user()->Id) }}"><i class="fa fa-cog"></i>Cài đặt</a>
                             <a class="dropdown-item" href="{{route("handleLogout")}}"><i class="fa fa-power-off"></i>Đăng xuất</a>
                         </ul>

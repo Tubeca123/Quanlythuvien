@@ -1,4 +1,22 @@
 @extends('admin.master_layout')
+@section('link')
+<!-- <style>
+        .visitors-table tbody tr td:last-child {
+            display: flex;
+            align-items: center;
+        }
+
+        .visitors-table .progress {
+            flex: 1;
+        }
+
+        .visitors-table .progress-parcent {
+            text-align: right;
+            margin-left: 10px;
+        }
+    </style> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+@endsection
 
 @section('page_content')
 <!-- START PAGE CONTENT-->
@@ -33,22 +51,22 @@
         </div>
 
         <div class="col-lg-3 col-md-6">
-        <a href="{{route('borrowing')}}">
-            <div class="ibox bg-warning color-white widget-stat">
-                <div class="ibox-body">
-                    <h2 class="m-b-5 font-strong">{{ \App\Models\Borrow::where('status', 4)->count() }}</h2>
-                    <div class="m-b-5">Phiếu muộn </div><i class="ti ti-time widget-stat-icon"></i>
-                    
+            <a href="{{route('borrowing')}}">
+                <div class="ibox bg-warning color-white widget-stat">
+                    <div class="ibox-body">
+                        <h2 class="m-b-5 font-strong">{{ \App\Models\Borrow::where('status', 4)->count() }}</h2>
+                        <div class="m-b-5">Phiếu muộn </div><i class="ti ti-time widget-stat-icon"></i>
+
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="ibox bg-danger color-white widget-stat">
+            <div class="ibox bg-teal color-white widget-stat">
                 <div class="ibox-body">
                     <h2 class="m-b-5 font-strong">108</h2>
-                    <div class="m-b-5">NEW USERS</div><i class="ti-user widget-stat-icon"></i>
-                    <div><i class="fa fa-level-down m-r-5"></i><small>-12% Lower</small></div>
+                    <div class="m-b-5">Phiếu trả</div><i class="ti-wallet widget-stat-icon"></i>
+
                 </div>
             </div>
         </div>
@@ -56,69 +74,153 @@
     
     <div class="row">
         <div class="col-lg-8">
+
             <div class="ibox">
                 <div class="ibox-body">
                     <div class="flexbox mb-4">
                         <div>
-                            <h3 class="m-0">Statistics</h3>
-                            <div>Your shop sales analytics</div>
+                            <h3 class="m-0">Thống kê</h3>
+                            <div></div>
                         </div>
                         <div class="d-inline-flex">
-                            <div class="px-3" style="border-right: 1px solid rgba(0,0,0,.1);">
-                                <div class="text-muted">WEEKLY INCOME</div>
-                                <div>
-                                    <span class="h2 m-0">$850</span>
-                                    <span class="text-success ml-2"><i class="fa fa-level-up"></i> +25%</span>
-                                </div>
-                            </div>
-                            <div class="px-3">
-                                <div class="text-muted">WEEKLY SALES</div>
-                                <div>
-                                    <span class="h2 m-0">240</span>
-                                    <span class="text-warning ml-2"><i class="fa fa-level-down"></i> -12%</span>
-                                </div>
+                            <div>
+                                <label>
+                                    <input type="radio" name="dataType" id="data1" checked> Thống kê theo tuần
+                                </label>
+                                <label>
+                                    <input type="radio" name="dataType" id="data2"> Thống kê theo tháng
+                                </label>
+                                <label>
+                                    <input type="radio" name="dataType" id="data3"> Thống kê theo năm
+                                </label>
                             </div>
                         </div>
                     </div>
                     <div>
                         <canvas id="bar_chart" style="height:260px;"></canvas>
+                        <script>
+                            var customLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+                            var data1 = @json($borrowByWeekDay).map(function(item) {
+                                return item.borrow_count;
+                            });
+
+                            var chart = function(customLabels, data1) {
+                                var a = {
+                                        labels: customLabels,
+                                        datasets: [{
+                                            label: "Lượt Mượn",
+                                            borderColor: 'rgba(52,152,219,1)',
+                                            // backgroundColor: 'rgba(52,152,219,1)',
+                                            pointBackgroundColor: 'rgba(52,152,219,1)',
+                                            data: data1
+                                        }]
+                                    },
+                                    t = {
+                                        responsive: !0,
+                                        maintainAspectRatio: !1
+                                    },
+                                    e = document.getElementById("bar_chart").getContext("2d");
+                                new Chart(e, {
+                                    type: "line",
+                                    data: a,
+                                    options: t
+                                });
+                            }
+                            chart(customLabels, data1, data2)
+
+                            document.getElementById("data1").addEventListener("click", function() {
+                                customLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+                                var data1 = @json($borrowByWeekDay).map(function(item) {
+                                    return item.borrow_count;
+                                });
+                                chart(customLabels, data1, data2)
+                            });
+
+                            document.getElementById("data2").addEventListener("click", function() {
+                                customLabels = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"]
+                                var data1 = @json($borrowByMonth).map(function(item) {
+                                    return item.borrow_month_count;
+                                });
+                                chart(customLabels, data1, data2)
+                            });
+
+                            document.getElementById("data3").addEventListener("click", function() {
+                                customLabels = ["thang", "Munday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Munday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+                                data1 = [29, 48, 40, 19, 78, 31, 85, 48, 40, 19, 78, 31, 85]
+                                chart(customLabels, data1, data2)
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
-        
         <div class="col-lg-4">
             <div class="ibox">
+
+                <div class="ibox-body">
+                    <div class="form-group" id="date_5">
+                        <label class="font-normal">Tìm kiếm</label>
+                        <form action="{{route('search_dashboard')}}" method="GET" >
+                        @csrf
+                            <div class="input-daterange input-group" id="datepicker">
+                                <span class="input-group-addon p-l-10 p-r-10">từ</span>
+                                <input class="input-sm form-control" type="date" name="start" value="{{ request('start', date('Y-m-01')) }}">
+                                <span class="input-group-addon p-l-10 p-r-10">đến</span>
+                                <input class="input-sm form-control" type="date" name="end" value="{{ request('end', date('Y-m-d')) }}">
+                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="ibox">
                 <div class="ibox-head">
-                    <div class="ibox-title">Statistics</div>
+                    <div class="ibox-title">Thống kê</div>
                 </div>
                 <div class="ibox-body">
                     <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <canvas id="doughnut_chart" style="height:160px;"></canvas>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="m-b-20 text-success"><i class="fa fa-circle-o m-r-10"></i>Desktop 52%</div>
-                            <div class="m-b-20 text-info"><i class="fa fa-circle-o m-r-10"></i>Tablet 27%</div>
-                            <div class="m-b-20 text-warning"><i class="fa fa-circle-o m-r-10"></i>Mobile 21%</div>
+                        <div class="col-12">
+                            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+                            <script>
+                                const xValues = ["Sách tốt", "Sách hư hại", "Sách mất"];
+                                const yValues = [@json($OkePercentage), @json($DamagePercentage), @json($diePercentage)];
+                                const barColors = [
+                                    "#3498db",
+                                    "#f1c40f",
+                                    "#E91E63"
+                                ];
+                                new Chart("myChart", {
+                                    type: "doughnut",
+                                    data: {
+                                        labels: xValues,
+                                        datasets: [{
+                                            backgroundColor: barColors,
+                                            data: yValues
+                                        }]
+                                    },
+                                    options: {
+                                        title: {
+                                            display: true,
+                                            text: "Tình trạng sách trả"
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
-                    <ul class="list-group list-group-divider list-group-full">
-                        <li class="list-group-item">Chrome
-                            <span class="float-right text-success"><i class="fa fa-caret-up"></i> 24%</span>
-                        </li>
-                        <li class="list-group-item">Firefox
-                            <span class="float-right text-success"><i class="fa fa-caret-up"></i> 12%</span>
-                        </li>
-                        <li class="list-group-item">Opera
-                            <span class="float-right text-danger"><i class="fa fa-caret-down"></i> 4%</span>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-lg-8">
             <div class="ibox">
                 <div class="ibox-head">
@@ -515,21 +617,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <style>
-        .visitors-table tbody tr td:last-child {
-            display: flex;
-            align-items: center;
-        }
+    </div> -->
 
-        .visitors-table .progress {
-            flex: 1;
-        }
-
-        .visitors-table .progress-parcent {
-            text-align: right;
-            margin-left: 10px;
-        }
-    </style>
 </div>
+
 @endsection

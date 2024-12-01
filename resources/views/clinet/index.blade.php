@@ -58,7 +58,7 @@
                             <a class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" title="Xem chi tiết">
                                 <i class="fa fa-eye font-14"></i></a>
                             <a class="btn btn-success btn-sm btn-plus" data-id="{{ $book->Id }}" title="Mượn">
-                                <i class="ti ti-plus"></i></a>
+                                <i class="ti ti-plus"></i></a> 
                         </td>
                         @else
                         <td><button class="btn btn-warning"> hết sách</button></td>
@@ -67,7 +67,7 @@
                                 <i class="fa fa-eye font-14"></i></a>
 
                         </td>
-                        @endif
+                        @endif 
 
                     </tr>
                     @endforeach

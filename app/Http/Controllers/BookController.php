@@ -24,6 +24,12 @@ class BookController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+     public function detail(String $id)
+     {
+        $books=Book::Where('Id',$id)->with(['Category','Publisher'])->first();
+         return view('admin.pages.Book.detail',['books'=>$books]);
+     }
     public function create()
     {
         $categories = Category::all();

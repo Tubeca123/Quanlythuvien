@@ -51,7 +51,10 @@
                     @foreach($books as $book)
                     <tr id="row_{{ $book->Id }}">
                         <td>
-                            <img src="{{ $book->Image }}"  class="img-thumbnail" style="width: 100px; height: auto;">
+                            <a href="{{route('detail_book',['Id'=>$book['Id']])}}" >
+                                <img src="{{ $book->Image }}"  class="img-thumbnail" style="width: 100px; height: auto;">
+                            </a>
+                            
                         </td>
                         <td>{{ $book->Name }}</td>
                         <td>{{ $book->About }}</td>
