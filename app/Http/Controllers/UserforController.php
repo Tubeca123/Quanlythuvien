@@ -42,7 +42,7 @@ class UserforController extends Controller
         $br = Borrow_detail::with('book')->where('Borrow_id', $id)->get();
 
         return view('clinet.user.book_in_borrow', ['br' => $br]);
-    }
+    }  
     // danh sách phiếu đã hủy
     public function list_close_br()
     {

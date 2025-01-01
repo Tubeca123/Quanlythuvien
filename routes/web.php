@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AddBorrowController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -65,11 +66,15 @@ use App\Http\Controllers\StatisticController;
 
     Route::get('/list_borrow_new', [AdminController::class, 'Borrow_wait'])->name('borrow_new');
     Route::get('/list_borrowing', [AdminController::class, 'Borrowing'])->name('borrowing');
+    Route::get('/list_borrow_done', [AdminController::class, 'Borrow_done'])->name('borrow_done');
     Route::post('/add_borrow/{Id}',  [AdminController::class, 'add_borrow']);
     // Route::get('/add_borrow/{Id}',  [AdminController::class, 'add_borrow']);
     Route::get('/check_book_wait_borrow/{Id}', [AdminController::class, 'get_return'])->name('check_borrow');
     Route::post('/return_borrow/{Id}',  [AdminController::class, 'return_borrow'])->name('return_borrow');
     Route::get('/book_wait_borrow/{Id}', [AdminController::class, 'book_in_wait'])->name('book_in_wait');
+    Route::get('/book_in_done/{Id}', [AdminController::class, 'book_in_done'])->name('book_in_done');
+
+
 
     Route::get('/books_list', [BookController::class, 'index'])->name('show_list_book');
     Route::get('/create_books', [BookController::class, 'create'])->name('create_book');
@@ -97,6 +102,10 @@ use App\Http\Controllers\StatisticController;
     Route::get('/search', [DashboardController::class, 'search'])->name('search_dashboard');
     Route::get('/statistic', [StatisticController::class, 'getStatistics']);    
 
+    Route::get('/add_view', [AddBorrowController::class, 'index'])->name('add_view');
+    Route::get('/book_view', [AddBorrowController::class, 'view_book'])->name('book_view');
+    Route::get('/search_student/{id}', [AddBorrowController::class, 'searchStudent']);
+    Route::post('/admin-create_borrow', [AddBorrowController::class, 'createBorrow']);
 
 
 

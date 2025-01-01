@@ -189,7 +189,7 @@
                     </div>
                     <div class="admin-info">
                         
-                        <div class="font-strong">{{Auth::user()->Full_name ?? "admin"}}</div><small>Administrator</small></div>
+                        <div class="font-strong">{{Auth::user()->Full_name ?? "admin"}}</div><small>Quản trị viên</small></div>
                 </div>
                 
 

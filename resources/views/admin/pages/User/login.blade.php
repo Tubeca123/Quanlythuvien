@@ -50,7 +50,7 @@
             @endif
         <form id="login-form" action="{{route("handlogin")}}" method="post">
         @csrf 
-            <h2 class="login-title">Log in</h2>
+            <h2 class="login-title">Đăng nhập</h2>
             <div class="form-group">
                 <div class="input-group-icon right">
                     <div class="input-icon"><i class="fa fa-envelope"></i></div>
@@ -63,7 +63,7 @@
             <div class="form-group">
                 <div class="input-group-icon right">
                     <div class="input-icon"><i class="fa fa-lock font-16"></i></div>
-                    <input class="form-control" type="password" name="password" placeholder="Password">
+                    <input class="form-control" type="password" name="password" placeholder="Mật khẩu">
                     @error('password')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror

@@ -45,6 +45,12 @@ class AdminController extends Controller
         // dd($br);
         return view('admin.pages.Borrow.borrowing', ['br' => $br]);
     }
+    public function Borrow_done()
+    {
+        $br = Borrow_return::get();
+        return view('admin.pages.Borrow.borrow_done', ['br' => $br]);
+    }
+
     public function get_return($id)
     {
         $book = Borrow_detail::with('book')->where('Borrow_id', $id)->get();
@@ -111,7 +117,16 @@ class AdminController extends Controller
 
         return view('admin.pages.Borrow.book_in_borrow_wait', ['br' => $br, 'br_ok' => $br_ok]);
     }
+    public function book_in_done(String $id)
+    {
+        $br_ok = Borrow_return::find($id);
+        // dd($id);
+        $br = Borrow_return_detail::with('book')->where('Borrow_return_id', $br_ok->Id)->get();
+        $br2 = Borrow::where('Id', $br_ok->Id)->get();
+        $sv = Borrow::with('user')->where('Id', $br_ok->Borrow_id)->first();
 
+        return view('admin.pages.Borrow.book_in_done', ['br' => $br, 'br_ok' => $br_ok,'sv'=>$sv ]);
+    }
     /**
      * Show the form for creating a new resource.
      */

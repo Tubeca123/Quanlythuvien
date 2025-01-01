@@ -1,10 +1,8 @@
-@extends('clinet.borrow_layout')
 <style>
     div.dataTables_filter {
         float: right;
     }
 </style>
-@section('page_content')
 
 
 <!-- START PAGE CONTENT -->
@@ -162,4 +160,3 @@
         });
     });
 </script>
-@endsection

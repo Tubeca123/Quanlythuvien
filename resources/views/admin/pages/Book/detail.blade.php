@@ -60,7 +60,7 @@
 
         <div class="row mt-4">
             <div class="col-12 text-end">
-                <a  class="btn btn-secondary">Quay lại</a>
+                <a  class="btn btn-secondary"href="{{route('show_list_book')}}" >Quay lại</a>
             </div>
         </div>
     </div>

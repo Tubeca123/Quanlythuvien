@@ -62,16 +62,18 @@
             </a>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="ibox bg-teal color-white widget-stat">
-                <div class="ibox-body">
-                    <h2 class="m-b-5 font-strong">108</h2>
-                    <div class="m-b-5">Phiếu trả</div><i class="ti-wallet widget-stat-icon"></i>
+            <a href="{{route('borrow_done')}}">
+                <div class="ibox bg-teal color-white widget-stat">
+                    <div class="ibox-body">
+                        <h2 class="m-b-5 font-strong">{{ \App\Models\Borrow_return::count() }}</h2>
+                        <div class="m-b-5">Phiếu trả</div><i class="ti-wallet widget-stat-icon"></i>
 
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-lg-8">
 
@@ -91,7 +93,6 @@
                                     <input type="radio" name="dataType" id="data2"> Thống kê theo tháng
                                 </label>
                                 <label>
-                                    <input type="radio" name="dataType" id="data3"> Thống kê theo năm
                                 </label>
                             </div>
                         </div>
@@ -143,12 +144,6 @@
                                 });
                                 chart(customLabels, data1, data2)
                             });
-
-                            document.getElementById("data3").addEventListener("click", function() {
-                                customLabels = ["thang", "Munday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Munday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-                                data1 = [29, 48, 40, 19, 78, 31, 85, 48, 40, 19, 78, 31, 85]
-                                chart(customLabels, data1, data2)
-                            });
                         </script>
                     </div>
                 </div>
@@ -160,8 +155,8 @@
                 <div class="ibox-body">
                     <div class="form-group" id="date_5">
                         <label class="font-normal">Tìm kiếm</label>
-                        <form action="{{route('search_dashboard')}}" method="GET" >
-                        @csrf
+                        <form action="{{route('search_dashboard')}}" method="GET">
+                            @csrf
                             <div class="input-daterange input-group" id="datepicker">
                                 <span class="input-group-addon p-l-10 p-r-10">từ</span>
                                 <input class="input-sm form-control" type="date" name="start" value="{{ request('start', date('Y-m-01')) }}">
