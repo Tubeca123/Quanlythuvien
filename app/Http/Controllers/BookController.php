@@ -70,13 +70,11 @@ class BookController extends Controller
             'Create_by.max' => 'Thông tin không được dài quá 50 ký tự.',
         ]);
     
-        // Kiểm tra xem xác thực có thất bại không
         if ($validator->fails()) {
-            // Nếu xác thực thất bại, trả về với thông báo lỗi và dữ liệu cũ
-            // dd($validator->errors());
+            
             return back()
                 ->withErrors($validator)
-                ->withInput(); // Giữ lại input mà người dùng đã nhập
+                ->withInput(); 
         }
 
         $inputData = [
@@ -84,7 +82,9 @@ class BookController extends Controller
              'About'  => $request->About  ,
              'Categories_id'  => $request->Categories_id   ?? 13,
              'Publisher_id'  => $request->Publisher_id   ,
-              'Quantity'=>$request->Quantity,  
+              'Quantity'=>$request->Quantity, 
+              'Stock'=>$request->Quantity, 
+               'Shelf'=>$request->Shelf, 
               'Price'=>$request->Price,  
              'Image'  => $request->avatar ,
              'author'=>$request->author,  

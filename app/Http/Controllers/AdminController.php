@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Book;
 use App\Models\Borrow;
 use App\Models\Borrow_detail;
 use App\Models\Borrow_return;
@@ -47,7 +47,7 @@ class AdminController extends Controller
     }
     public function Borrow_done()
     {
-        $br = Borrow_return::get();
+        $br = Borrow::where('Status', 4)->get();
         return view('admin.pages.Borrow.borrow_done', ['br' => $br]);
     }
 
@@ -89,21 +89,27 @@ class AdminController extends Controller
             $return_detail->IsAction = 1;
             $return_detail->save();
 
-            
 
-            if($return_detail->Status ==0 || $return_detail->Status ==2)
-            {
+
+
+
+            if ($return_detail->Status == 0 || $return_detail->Status == 2) {
                 $punish = new Punish();
                 $punish->Return_detail_id = $return_detail->Id;
-                $punish->Admin_id=Auth::User()->Id;
+                $punish->Admin_id = Auth::User()->Id;
                 $punish->User_id = $br->user->Id;
-                $punish->Status= $return_detail->Status;
-                $punish->Price =Null;
-                $punish->Create_date=now();
-                $punish->IsActive =1;
+                $punish->Status = $return_detail->Status;
+                $punish->Price = Null;
+                $punish->Create_date = now();
+                $punish->IsActive = 1;
                 $punish->save();
-            }
+            } else {
+                $books = Book::findOrFail($detail->Book_id);
 
+
+                $books->Stock += 1;
+                $books->save();
+            }
         }
 
         return  response()->json(['success' => true, 'message' => 'Phiếu mượn đã được trả thành công.']);
@@ -114,8 +120,10 @@ class AdminController extends Controller
         $br_ok = Borrow::find($id);
         // dd($id);
         $br = Borrow_detail::with('book')->where('Borrow_id', $id)->get();
+        $sv = Borrow::with('user')->where('Id', $id)->first();
 
-        return view('admin.pages.Borrow.book_in_borrow_wait', ['br' => $br, 'br_ok' => $br_ok]);
+
+        return view('admin.pages.Borrow.book_in_borrow_wait', ['br' => $br, 'br_ok' => $br_ok,'sv' => $sv]);
     }
     public function book_in_done(String $id)
     {
@@ -125,7 +133,7 @@ class AdminController extends Controller
         $br2 = Borrow::where('Id', $br_ok->Id)->get();
         $sv = Borrow::with('user')->where('Id', $br_ok->Borrow_id)->first();
 
-        return view('admin.pages.Borrow.book_in_done', ['br' => $br, 'br_ok' => $br_ok,'sv'=>$sv ]);
+        return view('admin.pages.Borrow.book_in_done', ['br' => $br, 'br_ok' => $br_ok, 'sv' => $sv]);
     }
     /**
      * Show the form for creating a new resource.
@@ -146,10 +154,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.

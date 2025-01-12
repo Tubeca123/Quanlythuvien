@@ -39,7 +39,7 @@
                                         <!-- Upload image button -->
                                         <div class="mt-4">
                                             <button type="button" id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-info btn-circle">
-                                                <i class="fa fa-upload"></i> 
+                                                <i class="fa fa-upload"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -107,6 +107,15 @@
                 </div>
                 <div class="row">
 
+                    <div class="form-group row">
+                        <label class="col-lg-2">vị trí</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="Shelf" value="{{ old('Shelf') }}">
+                            @error('Shelf')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label class="col-lg-2">Số lượng nhập</label>
                         <div class="col-sm-10">
@@ -211,7 +220,7 @@
             $('#holder').attr('src', url);
             $('#thumbnail').val(url);
         };
-        
+
 
     });
 </script>

@@ -24,7 +24,7 @@
                                 <span class="font-strong">Mã sinh viên:</span>{{ $sv->user->SV_id}}
                             </li>
                             <li class="m-b-5">
-                                <span class="font-strong">Tên:</span>{{ $sv->user->Full_name}}
+                                <span class="font-strong">Tên1:</span>{{ $sv->user->Full_name}}
                             </li>
                             <li class="m-b-5">
                                 <span class="font-strong">Email:</span>{{ $sv->user->Email}}
@@ -71,7 +71,7 @@
                 </tbody>
             </table>
             <table class="table no-border">
-                <thead>
+                <thead>-
                     <tr>
                         <th></th>
                         <th width="15%"></th>

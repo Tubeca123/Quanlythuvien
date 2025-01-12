@@ -37,7 +37,7 @@ use App\Http\Controllers\StatisticController;
     Route::get('/list_close_borrow', [UserforController::class, 'list_close_br'])->name('list_close_br');
     Route::get('/book_wait_borrow/{Id}', [UserforController::class, 'book_wait'])->name('book_wait_br');
     Route::get('/list_borrowing', [UserforController::class, 'list_borrowing'])->name('borrowing2');
-    Route::get('/list_borrow_done', [UserforController::class, 'done_br'])->name('borrow_done');
+    Route::get('/list_borrow_done', [UserforController::class, 'done_br'])->name('borrow_done1');
 
     Route::post('/create_borrow', [BorrowController::class, 'createBorrow']);
     Route::post('/destroy_borrow/{Id}',  [BorrowController::class, 'close_brow_wait']);

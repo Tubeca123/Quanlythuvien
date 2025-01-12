@@ -23,7 +23,7 @@ class BorrowController extends Controller
 
         foreach ($br_rt as $item) {
             $punishRecords = Punish::with('return_detail')->where('Return_detail_id', $item->Id)->get();
-            $pn = $pn->merge($punishRecords); 
+            $pn = $pn->merge($punishRecords);
         }
 
         return view('admin.pages.Punish.punish_layout', ['br_rt' => $br_rt, 'sv' => $sv, 'pn' => $pn]);
@@ -46,7 +46,6 @@ class BorrowController extends Controller
             ];
             $count = count($borrow);
             session()->put('borrow', $borrow);
-            // return response()->json(['success' => true, 'message' => 'Thêm vào phiếu mượn', 'count' => $count]);
             return response()->json(['success' => true, 'message' => 'Thêm vào phiếu mượn', 'count' => $count, 'data' =>  $borrow]);
         }
     }
@@ -82,14 +81,19 @@ class BorrowController extends Controller
 
             $br_detail->Borrow_id = $br_id;
 
-            $br_detail->Book_id = $book_id; // ID sách
+            $br_detail->Book_id = $book_id;
             $br_detail->Create_date = now();
             $br_detail->IsAction = 1;
-            $br_detail->save(); // Lưu chi tiết phiếu mượn
+            $br_detail->save();
+
+            $books = Book::findOrFail($book_id); 
+
+            $books->Stock -= 1;
+            $books->Number_borowed += 1;
+            $books->save(); 
         }
         session()->forget('borrow');
 
-        // 4. Trả về phản hồi thành công
         return response()->json(['success' => true, 'message' => 'Tạo phiếu mượn thành công']);
     }
 

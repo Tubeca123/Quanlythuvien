@@ -43,10 +43,10 @@
                     <h2 class="text-primary mb-4">{{ $books->Name }}</h2>
 
                     <p><span class="details-label">Thông tin:</span> {{ $books->About }}</p>
-                    <p><span class="details-label">Số lượt mượn:</span> {{ $books->Number_borowed }}</p>
+                    <p><span class="details-label">Số lượt mượn:</span> {{ $books->About }}</p>
                     
                     <p><span class="details-label">Thể loại:</span> {{ $books->Category ? $books->Category->Name : 'Không có thể loại' }}</p>
-                    <p><span class="details-label">Vị trí sách:</span> {{ $books->Shelf  }}</p>
+                    
                     <p><span class="details-label">Nhà xuất bản:</span> {{ $books->Publisher ? $books->Publisher->Name : 'Không có nhà xuất bản' }}</p>
 
                     <p><span class="details-label">Giá trị:</span> {{ number_format($books->Price, 0, ',', '.') }} VND</p>

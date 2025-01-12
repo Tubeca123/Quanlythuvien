@@ -136,8 +136,8 @@ class UserController extends Controller
      */
     public function show()
     {
-        $user = User::all();
-        // $user = User::where('Role_id',2)->get();
+        $user = User::all()->Where('Role_id',2);
+        // $user = User::where()->get();
         return view('admin.pages.User.list', ['user' => $user]);
     }
 
@@ -244,7 +244,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if ($user) {
-            $user->Role_id = 2;
+            $user->Role_id = 1;
             $user->save();
 
             return response()->json(['success' => true, 'message' => 'Phân quyền thành công']);

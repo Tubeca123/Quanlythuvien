@@ -21,13 +21,13 @@
                         <div class="m-b-5 font-bold">Thông tin sinh viên </div>
                         <ul class="list-unstyled m-t-10">
                             <li class="m-b-5">
-                                <span class="font-strong">Tên:</span> {{Auth::user()->Full_name }}
+                                <span class="font-strong">Tên:</span> {{ $sv->user->Full_name}}
                             </li>
                             <li class="m-b-5">
-                                <span class="font-strong">Email:</span>{{Auth::user()->Email }}
+                                <span class="font-strong">Email:</span>{{ $sv->user->Email}}
                             </li>
                             <li>
-                                <span class="font-strong">Số điện thoại:</span> {{Auth::user()->Phone }}
+                                <span class="font-strong">Mã sinh viên:</span> {{ $sv->user->SV_id}}
                             </li>
                         </ul>
                     </div>
