@@ -85,6 +85,14 @@
                             <div></div>
                         </div>
                         <div class="d-inline-flex">
+                            @if($check ?? false)
+                            <div>
+                                <label>
+                                    <input type="radio" name="dataType" id="data1" checked> Thống kê theo tìm kiếm
+                                </label>
+                                
+                            </div>
+                            @else 
                             <div>
                                 <label>
                                     <input type="radio" name="dataType" id="data1" checked> Thống kê theo tuần
@@ -95,15 +103,31 @@
                                 <label>
                                 </label>
                             </div>
+                            @endif
+                            
                         </div>
                     </div>
                     <div>
                         <canvas id="bar_chart" style="height:260px;"></canvas>
                         <script>
-                            var customLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
-                            var data1 = @json($borrowByWeekDay).map(function(item) {
+                            var check = @json($check ?? false); 
+                            if(check){
+                               
+                                var customLabels =  Object.values( @json($dates ?? []));
+                                var data1 = Object.values( @json($borrowDataArray ?? []));
+                                console.log(data1);
+                                console.log(customLabels);
+                                
+                                
+                            }else{
+                                var customLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+                                var data1 = @json($borrowByWeekDay).map(function(item) {
                                 return item.borrow_count;
                             });
+                            }
+
+                            
+
 
                             var chart = function(customLabels, data1) {
                                 var a = {
@@ -127,7 +151,7 @@
                                     options: t
                                 });
                             }
-                            chart(customLabels, data1, data2)
+                            chart(customLabels, data1)
 
                             document.getElementById("data1").addEventListener("click", function() {
                                 customLabels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]

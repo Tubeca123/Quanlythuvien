@@ -47,7 +47,18 @@ class DashboardController extends Controller
     {
         $startDate = $rq->input('start', date('Y-m-01'));
         $endDate = $rq->input('end', date('Y-m-d'));
+        $start = new \DateTime($startDate);
+        $end = new \DateTime($endDate);
 
+        // Tạo mảng chứa tất cả các ngày trong khoảng thời gian
+        $dates = [];
+        while ($start <= $end) {
+            // Thêm ngày vào mảng
+            $dates[] = $start->format('Y-m-d');
+            
+            // Tiến đến ngày tiếp theo
+            $start->modify('+1 day');
+        }
         $OkeCount = Borrow_return_detail::where('Status', 1)->whereBetween('Create_date', [$startDate, $endDate])->count();
         $DamageCount = Borrow_return_detail::where('Status', 2)->whereBetween('Create_date', [$startDate, $endDate])->count();
         $dieCount = Borrow_return_detail::where('Status', 0)->whereBetween('Create_date', [$startDate, $endDate])->count();
@@ -76,8 +87,23 @@ class DashboardController extends Controller
         $months = collect(range(1, 12))->mapWithKeys(function ($month) use ($borrowByMonth) {
             return [$month => $borrowByMonth->get($month)->borrow_month_count ?? 0];
         });
+        $check = true;
 
-        return view('admin.pages.dashboard', compact('OkePercentage', 'DamagePercentage', 'diePercentage', 'OkeCount', 'DamageCount', 'dieCount', 'borrowByWeekDay', 'borrowByMonth'));
+        $borrowByDate = DB::table('borrow')
+        ->selectRaw('DATE(Create_date) as date, COUNT(*) as borrow_date_count')
+        ->whereBetween('Create_date', [$startDate, $endDate])
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+        $borrowData = collect($dates)->mapWithKeys(function ($date) use ($borrowByDate) {
+            // Lấy số lần mượn trong ngày từ dữ liệu mượn
+            $borrow = $borrowByDate->firstWhere('date', $date);
+            return [$date => $borrow ? $borrow->borrow_date_count : 0]; // Nếu không có dữ liệu mượn thì trả về 0
+        });
+        $borrowDataArray = $borrowData->toArray();
+
+        return view('admin.pages.dashboard', compact('OkePercentage', 'DamagePercentage', 'diePercentage', 'OkeCount', 'DamageCount', 'dieCount', 'borrowByWeekDay', 'borrowByMonth', 'check', 'dates', 'borrowDataArray'));
     }
 
 
